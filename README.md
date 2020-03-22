@@ -11,6 +11,8 @@ tool for running sub-scaffolders on existing projects
 * [Usage](#usage)
   * [Installation](#installation)
   * [Example](#example)
+  * [API](#api)
+    * [`scaffolders` __object__ (_required_)](#scaffolders-object-required)
 * [Contributing](#contributing)
   * [Dependencies](#dependencies)
   * [Verification](#verification)
@@ -32,8 +34,20 @@ $ npm install @form8ion/lift --save-prod
 ### Example
 
 ```javascript
-import lift from '@form8ion/lift';
+import {lift} from '@form8ion/lift';
+
+lift({});
 ```
+
+### API
+
+#### `scaffolders` __object__ (_required_)
+
+* keys: __string__ Name of each scaffolder
+* values: __function__ Does the scaffolding when executed
+  * receives an options object as the first argument
+    * `projectRoot`: __string__ path of the working directory where the CLI
+      command was executed
 
 ## Contributing
 
