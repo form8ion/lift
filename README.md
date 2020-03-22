@@ -11,9 +11,16 @@ tool for running sub-scaffolders on existing projects
 * [Usage](#usage)
   * [Installation](#installation)
   * [Example](#example)
+  * [API](#api)
+    * [`scaffolders` __object__ (_required_)](#scaffolders-object-required)
 * [Contributing](#contributing)
   * [Dependencies](#dependencies)
   * [Verification](#verification)
+
+## Features
+
+* Runs registered sub-scaffolders independantly of the [project-scaffolder](https://github.com/travi/project-scaffolder),
+  enabling existing projects to be lifted with additional functionality
 
 ## Usage
 
@@ -32,8 +39,28 @@ $ npm install @form8ion/lift --save-prod
 ### Example
 
 ```javascript
-import lift from '@form8ion/lift';
+import {lift} from '@form8ion/lift';
+
+lift({});
 ```
+
+### API
+
+#### `scaffolders` __object__ (_required_)
+
+* keys: __string__ Name of each scaffolder
+* values: __function__ Does the scaffolding when executed
+  * receives an options object as the first argument
+    * `projectRoot`: __string__ path of the working directory where the CLI
+      command was executed
+
+#### `decisions` __object__ (_optional_)
+
+Answers for expected prompts, to enable consistent behavior while skipping
+those particular interactive prompts
+
+* keys: __string__ Name of each question
+* values:
 
 ## Contributing
 
