@@ -22,6 +22,14 @@ tool for running sub-scaffolders on existing projects
 * Runs registered sub-scaffolders independantly of the [project-scaffolder](https://github.com/travi/project-scaffolder),
   enabling existing projects to be lifted with additional functionality
 
+### Coming Soon
+
+* Modification of existing `README.md` files to add badges and other
+  documentation
+* JavaScript project features
+  * Dependency installation
+  * Modification of `package.json` to add `scripts` and other details
+
 ## Usage
 
 <!-- consumer badges -->
