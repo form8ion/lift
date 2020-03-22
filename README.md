@@ -17,6 +17,11 @@ tool for running sub-scaffolders on existing projects
   * [Dependencies](#dependencies)
   * [Verification](#verification)
 
+## Features
+
+* Runs registered sub-scaffolders independantly of the [project-scaffolder](https://github.com/travi/project-scaffolder),
+  enabling existing projects to be lifted with additional functionality
+
 ## Usage
 
 <!-- consumer badges -->
@@ -48,6 +53,14 @@ lift({});
   * receives an options object as the first argument
     * `projectRoot`: __string__ path of the working directory where the CLI
       command was executed
+
+#### `decisions` __object__ (_optional_)
+
+Answers for expected prompts, to enable consistent behavior while skipping
+those particular interactive prompts
+
+* keys: __string__ Name of each question
+* values:
 
 ## Contributing
 
