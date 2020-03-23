@@ -68,7 +68,8 @@ Answers for expected prompts, to enable consistent behavior while skipping
 those particular interactive prompts
 
 * keys: __string__ Name of each question
-* values:
+* values: __mixed__ The answer to provide instead of being prompted
+  interactively
 
 ## Contributing
 
