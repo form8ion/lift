@@ -8,11 +8,14 @@ tool for running sub-scaffolders on existing projects
 
 ## Table of Contents
 
+* [Features](#features)
+  * [Coming Soon](#coming-soon)
 * [Usage](#usage)
   * [Installation](#installation)
   * [Example](#example)
   * [API](#api)
     * [`scaffolders` __object__ (_required_)](#scaffolders-object-required)
+    * [`decisions` __object__ (_optional_)](#decisions-object-optional)
 * [Contributing](#contributing)
   * [Dependencies](#dependencies)
   * [Verification](#verification)

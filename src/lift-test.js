@@ -2,6 +2,7 @@ import sinon from 'sinon';
 import any from '@travi/any';
 import {assert} from 'chai';
 import * as chooser from './scaffolder-chooser';
+import * as documentation from './documentation';
 import lift from './lift';
 
 suite('lift', () => {
@@ -12,6 +13,7 @@ suite('lift', () => {
 
     sandbox.stub(process, 'cwd');
     sandbox.stub(chooser, 'default');
+    sandbox.stub(documentation, 'default');
   });
 
   teardown(() => sandbox.restore());
@@ -19,13 +21,15 @@ suite('lift', () => {
   test('that the chosen scaffolder is executed', async () => {
     const scaffolders = any.simpleObject();
     const decisions = any.simpleObject();
-    const chosenScaffolder = sinon.spy();
+    const chosenScaffolder = sinon.stub();
     const projectPath = any.string();
+    const scaffolderResults = any.simpleObject();
     chooser.default.withArgs(scaffolders, decisions).resolves(chosenScaffolder);
+    chosenScaffolder.withArgs({projectRoot: projectPath}).resolves(scaffolderResults);
     process.cwd.returns(projectPath);
 
     await lift({scaffolders, decisions});
 
-    assert.calledWith(chosenScaffolder, {projectRoot: projectPath});
+    assert.calledWith(documentation.default, scaffolderResults);
   });
 });
