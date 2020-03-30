@@ -1,17 +1,21 @@
 import {After, Before, When} from 'cucumber';
 import stubbedFs from 'mock-fs';
 import any from '@travi/any';
-import {lift, questionNames} from '../../../../lib/index.cjs';
+// import {lift, questionNames} from '../../../../lib/index.cjs';
+import {lift, questionNames} from '../../../../src';
 
 Before(async function () {
   stubbedFs({
     'README.md': `# project-name
 
-<!-- status badges -->
+<!--status-badges start -->
+<!--status-badges end -->
 
-<!-- consumer badges -->
+<!--consumer-badges start -->
+<!--consumer-badges end -->
 
-<!-- contribution badges -->`
+<!--contribution-badges start -->
+<!--contribution-badges end -->`
   });
 
   this.contributingBadgeName = any.word();
@@ -31,7 +35,7 @@ When('the project is lifted', async function () {
     scaffolders: {
       [chosenScaffolder]: () => ({
         badges: {
-          contributing: {
+          contribution: {
             [this.contributingBadgeName]: {
               text: this.contributingBadgeText,
               link: this.contributingBadgeLink,

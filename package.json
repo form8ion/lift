@@ -74,6 +74,9 @@
     "travis-lint": "1.0.0"
   },
   "dependencies": {
-    "@form8ion/overridable-prompts": "^1.0.1"
+    "@form8ion/overridable-prompts": "^1.0.1",
+    "@form8ion/remark-inject-badges": "1.0.0-alpha.1",
+    "mdast-zone": "^4.0.0",
+    "remark": "^11.0.2"
   }
 }

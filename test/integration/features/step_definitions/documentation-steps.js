@@ -15,15 +15,19 @@ Then('the badges from the scaffolder are added to the README', async function ()
     await fs.readFile(`${process.cwd()}/README.md`, 'utf-8'),
     `# project-name
 
-<!-- status badges -->
+<!--status-badges start -->
 
-<!-- consumer badges -->
+<!--status-badges end -->
 
-<!-- contribution badges -->
+<!--consumer-badges start -->
+
+<!--consumer-badges end -->
+
+<!--contribution-badges start -->
 
 [![${this.contributingBadgeText}][${this.contributingBadgeName}-badge]][${this.contributingBadgeName}-link]
 
-[${this.contributingBadgeName}-link]: ${this.contributingBadgeLink}
-[${this.contributingBadgeName}-badge]: ${this.contributingBadgeImg}`
+<!--contribution-badges end -->
+`
   );
 });
