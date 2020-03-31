@@ -24,6 +24,9 @@ tool for running sub-scaffolders on existing projects
 
 * Runs registered sub-scaffolders independantly of the [project-scaffolder](https://github.com/travi/project-scaffolder),
   enabling existing projects to be lifted with additional functionality
+  * Injects badges from the sub-scaffolder results into the `README.md` as long
+    as the existing `README.md` lists the badges using the (fairly recent)
+    zoning convention
 
 ### Coming Soon
 
