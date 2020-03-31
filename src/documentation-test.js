@@ -32,7 +32,6 @@ suite('documentation', () => {
     const updatedFileContents = any.string();
     process.withArgs(existingFileContents).yields(null, updatedFileContents);
     fs.readFileSync.withArgs(pathToReadmeFile, 'utf8').returns(existingFileContents);
-    // fs.writeFileSync.resolves();
 
     await liftDocumentation({projectRoot, results: {badges}});
 

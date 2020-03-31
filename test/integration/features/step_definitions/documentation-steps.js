@@ -28,6 +28,10 @@ Then('the badges from the scaffolder are added to the README', async function ()
 [![${this.contributingBadgeText}][${this.contributingBadgeName}-badge]][${this.contributingBadgeName}-link]
 
 <!--contribution-badges end -->
+
+[${this.contributingBadgeName}-link]: ${this.contributingBadgeLink}
+
+[${this.contributingBadgeName}-badge]: ${this.contributingBadgeImg}
 `
   );
 });
