@@ -30,6 +30,6 @@ suite('lift', () => {
 
     await lift({scaffolders, decisions});
 
-    assert.calledWith(documentation.default, scaffolderResults);
+    assert.calledWith(documentation.default, {results: scaffolderResults, projectRoot: projectPath});
   });
 });
