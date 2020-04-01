@@ -1,6 +1,6 @@
 _extends: .github
 repository:
   name: lift
-  description: tool for running sub-scaffolders on existing projects :aerial_tramway:
+  description: "tool for running sub-scaffolders on existing projects :aerial_tramway:"
   homepage: 'https://npm.im/@form8ion/lift'
   private: false
