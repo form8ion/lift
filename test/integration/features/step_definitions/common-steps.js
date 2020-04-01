@@ -1,3 +1,4 @@
+import {promises as fs} from 'fs';
 import {After, Before, When} from 'cucumber';
 import stubbedFs from 'mock-fs';
 import any from '@travi/any';
@@ -5,23 +6,7 @@ import any from '@travi/any';
 import {lift, questionNames} from '../../../../src';
 
 Before(async function () {
-  stubbedFs({
-    'README.md': `# project-name
-
-<!--status-badges start -->
-<!--status-badges end -->
-
-<!--consumer-badges start -->
-<!--consumer-badges end -->
-
-<!--contribution-badges start -->
-<!--contribution-badges end -->`
-  });
-
-  this.contributingBadgeName = any.word();
-  this.contributingBadgeText = any.word();
-  this.contributingBadgeLink = any.url();
-  this.contributingBadgeImg = any.url();
+  stubbedFs({'README.md': ''});
 });
 
 After(function () {
@@ -31,18 +16,25 @@ After(function () {
 When('the project is lifted', async function () {
   const chosenScaffolder = any.word();
 
+  await fs.writeFile(
+    `${process.cwd()}/README.md`,
+    `# project-name
+
+<!--status-badges start -->
+<!--status-badges end -->
+
+<!--consumer-badges start -->
+<!--consumer-badges end -->
+
+<!--contribution-badges start -->
+${this.existingContributingBadges}
+<!--contribution-badges end -->`
+  );
+
   await lift({
     scaffolders: {
       [chosenScaffolder]: () => ({
-        badges: {
-          contribution: {
-            [this.contributingBadgeName]: {
-              text: this.contributingBadgeText,
-              link: this.contributingBadgeLink,
-              img: this.contributingBadgeImg
-            }
-          }
-        }
+        badges: this.badges
       })
     },
     decisions: {[questionNames.SCAFFOLDER]: chosenScaffolder}
