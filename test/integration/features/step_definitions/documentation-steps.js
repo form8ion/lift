@@ -27,7 +27,6 @@ Given('the chosen sub-scaffolder produces badges', async function () {
       },
       [any.word()]: {
         text: any.word(),
-        link: any.url(),
         img: any.url()
       }
     }
@@ -55,7 +54,11 @@ Then('the badges from the scaffolder are added to the README', async function ()
 
 ${this.existingContributingBadges}${
   Object.entries(this.badges.contribution)
-    .map(([name, details]) => `[![${details.text}][${name}-badge]][${name}-link]`)
+    .map(([name, details]) => (
+      details.link
+        ? `[![${details.text}][${name}-badge]][${name}-link]`
+        : `![${details.text}][${name}-badge]`
+    ))
     .join('\n')
 }
 
@@ -63,9 +66,12 @@ ${this.existingContributingBadges}${
 
 ${
   Object.entries(this.badges.contribution)
-    .map(([name, details]) => (`[${name}-link]: ${details.link}
+    .map(([name, details]) => (`${details.link
+      ? `[${name}-link]: ${details.link}
 
-[${name}-badge]: ${details.img}`))
+`
+      : ''
+    }[${name}-badge]: ${details.img}`))
     .join('\n\n')
 }
 `
