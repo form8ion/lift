@@ -37,6 +37,31 @@ Given('the chosen sub-scaffolder does not produce badges', async function () {
   this.badges = null;
 });
 
+Given('the existing README uses modern badge zones', async function () {
+  this.existingReadmeContent = `# project-name
+
+<!--status-badges start -->
+<!--status-badges end -->
+
+<!--consumer-badges start -->
+<!--consumer-badges end -->
+
+<!--contribution-badges start -->
+${this.existingContributingBadges}
+<!--contribution-badges end -->`;
+});
+
+Given('the existing README uses legacy badge section markers', async function () {
+  this.existingReadmeContent = `# project-name
+
+<!-- status badges -->
+
+<!-- consumer badges -->
+
+<!-- contribution badges -->
+${this.existingContributingBadges}`;
+});
+
 Then('the badges from the scaffolder are added to the README', async function () {
   assert.equal(
     await fs.readFile(`${process.cwd()}/README.md`, 'utf-8'),
