@@ -24,7 +24,6 @@ Feature: Base Functionality
     When the project is lifted
     Then the badges remain as they were in the README
 
-  @wip
   Scenario: Legacy Badge Section Markers With No Badges
     Given the existing README has no section heading
     And the existing README has no badges
@@ -33,7 +32,6 @@ Feature: Base Functionality
     When the project is lifted
     Then the badges from the scaffolder are added to the README
 
-  @wip
   Scenario: Legacy Badge Section Markers With Existing Badges
     Given the existing README has no section heading
     And the existing README has existing badges

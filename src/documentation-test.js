@@ -1,5 +1,6 @@
 import fs from 'fs';
 import badgePlugin from '@form8ion/remark-inject-badges';
+import legacyMarkerPlugin from '@form8ion/remark-update-legacy-badge-markers';
 import sinon from 'sinon';
 import {assert} from 'chai';
 import any from '@travi/any';
@@ -20,6 +21,7 @@ suite('documentation', () => {
     const use = sinon.stub();
     process = sinon.stub();
     remark.default.returns({use});
+    use.withArgs(legacyMarkerPlugin).returns({use});
     use.withArgs(badgePlugin, badges).returns({process});
   });
 
