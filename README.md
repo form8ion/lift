@@ -27,11 +27,9 @@ tool for running sub-scaffolders on existing projects :aerial_tramway:
   * Injects badges from the sub-scaffolder results into the `README.md` as long
     as the existing `README.md` lists the badges using the (fairly recent)
     zoning convention
+* Modify existing `README.md` files to add badges
 
 ### Coming Soon
-
-* Modification of existing `README.md` files to add badges and other
-  documentation
 * JavaScript project features
   * Dependency installation
   * Modification of `package.json` to add `scripts` and other details
