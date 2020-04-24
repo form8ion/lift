@@ -4,6 +4,7 @@ import any from '@travi/any';
 import {assert} from 'chai';
 import * as chooser from './scaffolder-chooser';
 import * as documentation from './documentation';
+import * as liftEnhancers from './enhancers';
 import lift from './lift';
 
 suite('lift', () => {
@@ -15,6 +16,7 @@ suite('lift', () => {
     sandbox.stub(process, 'cwd');
     sandbox.stub(chooser, 'default');
     sandbox.stub(documentation, 'default');
+    sandbox.stub(liftEnhancers, 'default');
     sandbox.stub(resultsReporter, 'reportResults');
   });
 
@@ -22,6 +24,7 @@ suite('lift', () => {
 
   test('that the chosen scaffolder is executed', async () => {
     const scaffolders = any.simpleObject();
+    const enhancers = any.simpleObject();
     const decisions = any.simpleObject();
     const chosenScaffolder = sinon.stub();
     const projectPath = any.string();
@@ -30,9 +33,10 @@ suite('lift', () => {
     chosenScaffolder.withArgs({projectRoot: projectPath}).resolves(scaffolderResults);
     process.cwd.returns(projectPath);
 
-    await lift({scaffolders, decisions});
+    await lift({scaffolders, decisions, enhancers});
 
     assert.calledWith(documentation.default, {results: scaffolderResults, projectRoot: projectPath});
+    assert.calledWith(liftEnhancers.default, {results: scaffolderResults, enhancers});
     assert.calledWith(resultsReporter.reportResults, {nextSteps: scaffolderResults.nextSteps});
   });
 });
