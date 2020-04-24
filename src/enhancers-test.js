@@ -11,14 +11,14 @@ suite('enhancers', () => {
     const lift = sinon.spy();
     const test = sinon.stub();
     const otherLift = sinon.spy();
-    test.withArgs({projectRoot}).returns(true);
+    test.withArgs({projectRoot}).resolves(true);
 
     await applyEnhancers({
       results,
       projectRoot,
       enhancers: {
         [any.word()]: {test, lift},
-        [any.word()]: {test: () => false, lift: otherLift}
+        [any.word()]: {test: () => Promise.resolve(false), lift: otherLift}
       }
     });
 
