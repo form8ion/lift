@@ -11,7 +11,7 @@ suite('enhancers', () => {
 
     await applyEnhancers({results, enhancers: {[any.word()]: {test: () => true, lift}}});
 
-    assert.calledWith(lift, results);
+    assert.calledWith(lift, {results});
   });
 
   test('that no liftEnhancers are applied if none are provided', async () => {
