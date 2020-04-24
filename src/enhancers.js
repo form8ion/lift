@@ -1,5 +1,7 @@
-export default function ({results, enhancers = {}}) {
+export default function ({results, enhancers = {}, projectRoot}) {
   Object.values(enhancers).forEach(enhancer => {
-    enhancer.lift({results});
+    if (enhancer.test({projectRoot})) {
+      enhancer.lift({results});
+    }
   });
 }

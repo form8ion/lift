@@ -9,7 +9,7 @@ export default async function ({scaffolders, decisions, enhancers}) {
   const results = await scaffolder({projectRoot});
 
   await Promise.all([
-    applyEnhancers({results, enhancers}),
+    applyEnhancers({results, enhancers, projectRoot}),
     liftDocumentation({projectRoot, results})
   ]);
 

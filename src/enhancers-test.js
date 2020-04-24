@@ -7,11 +7,23 @@ suite('enhancers', () => {
   const results = any.simpleObject();
 
   test('that an enhancer that matches the project is executed', async () => {
+    const projectRoot = any.string();
     const lift = sinon.spy();
+    const test = sinon.stub();
+    const otherLift = sinon.spy();
+    test.withArgs({projectRoot}).returns(true);
 
-    await applyEnhancers({results, enhancers: {[any.word()]: {test: () => true, lift}}});
+    await applyEnhancers({
+      results,
+      projectRoot,
+      enhancers: {
+        [any.word()]: {test, lift},
+        [any.word()]: {test: () => false, lift: otherLift}
+      }
+    });
 
     assert.calledWith(lift, {results});
+    assert.notCalled(otherLift);
   });
 
   test('that no liftEnhancers are applied if none are provided', async () => {
