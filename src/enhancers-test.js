@@ -22,7 +22,7 @@ suite('enhancers', () => {
       }
     });
 
-    assert.calledWith(lift, {results});
+    assert.calledWith(lift, {results, projectRoot});
     assert.notCalled(otherLift);
   });
 
