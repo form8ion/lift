@@ -5,9 +5,9 @@ import applyEnhancers from './enhancers';
 
 suite('enhancers', () => {
   const results = any.simpleObject();
+  const projectRoot = any.string();
 
   test('that an enhancer that matches the project is executed', async () => {
-    const projectRoot = any.string();
     const lift = sinon.spy();
     const test = sinon.stub();
     const otherLift = sinon.spy();
@@ -24,6 +24,27 @@ suite('enhancers', () => {
 
     assert.calledWith(lift, {results, projectRoot});
     assert.notCalled(otherLift);
+  });
+
+  test('that an enhancer error rejects the enhancer application', async () => {
+    const error = new Error('from test');
+
+    try {
+      await applyEnhancers({
+        results,
+        projectRoot,
+        enhancers: {
+          [any.word()]: {
+            test: () => Promise.resolve(true),
+            lift: () => Promise.reject(error)
+          }
+        }
+      });
+
+      throw new Error('applying enhancers should have thrown an error');
+    } catch (e) {
+      assert.equal(e, error);
+    }
   });
 
   test('that no liftEnhancers are applied if none are provided', async () => {

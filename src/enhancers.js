@@ -1,7 +1,9 @@
 export default function ({results, enhancers = {}, projectRoot}) {
-  Object.values(enhancers).forEach(async enhancer => {
+  return Promise.all(Object.values(enhancers).map(async enhancer => {
     if (await enhancer.test({projectRoot})) {
-      enhancer.lift({results, projectRoot});
+      return enhancer.lift({results, projectRoot});
     }
-  });
+
+    return Promise.resolve();
+  }));
 }
