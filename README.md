@@ -17,6 +17,7 @@ tool for running sub-scaffolders on existing projects :aerial_tramway:
   * [API](#api)
     * [`scaffolders` __object__ (_required_)](#scaffolders-object-required)
     * [`decisions` __object__ (_optional_)](#decisions-object-optional)
+    * [`enhancers` __object__ (_optional_)](#enhancers-object-optional)
 * [Contributing](#contributing)
   * [Dependencies](#dependencies)
   * [Verification](#verification)
@@ -57,7 +58,7 @@ import {lift, questionNames} from '@form8ion/lift';
 
 ```javascript
 (async () => {
-  await lift({scaffolders: {foo: () => ({})}, decisions: {[questionNames.SCAFFOLDER]: 'foo'}, enhancers: {}});
+  await lift({scaffolders: {}, decisions: {[questionNames.SCAFFOLDER]: 'foo'}, enhancers: {}});
 })();
 ```
 
@@ -79,6 +80,20 @@ those particular interactive prompts
 * keys: __string__ Name of each question
 * values: __mixed__ The answer to provide instead of being prompted
   interactively
+
+#### `enhancers` __object__ (_optional_)
+
+Additional lift processors to be applied to projects based on the result of
+applying the provided predicate function to the current project
+
+* keys: __string__ Name of each enhancer. Provided only for developer
+  experience. Does not influence execution behavior.
+* values: __function__ Does the additional lifting when executed
+  * receives an options object as the first argument
+    * `projectRoot`: __string__ path of the working directory where the CLI
+      command was executed
+    * `results`: __object__ results returned from executing the chosen
+      sub-scaffolder
 
 ## Contributing
 
