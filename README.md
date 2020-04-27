@@ -9,10 +9,11 @@ tool for running sub-scaffolders on existing projects :aerial_tramway:
 ## Table of Contents
 
 * [Features](#features)
-  * [Coming Soon](#coming-soon)
 * [Usage](#usage)
   * [Installation](#installation)
   * [Example](#example)
+    * [Import](#import)
+    * [Execute](#execute)
   * [API](#api)
     * [`scaffolders` __object__ (_required_)](#scaffolders-object-required)
     * [`decisions` __object__ (_optional_)](#decisions-object-optional)
@@ -28,11 +29,7 @@ tool for running sub-scaffolders on existing projects :aerial_tramway:
     as the existing `README.md` lists the badges using the (fairly recent)
     zoning convention
 * Modify existing `README.md` files to add badges
-
-### Coming Soon
-* JavaScript project features
-  * Dependency installation
-  * Modification of `package.json` to add `scripts` and other details
+* Apply lift enhancers for additional project-specific updates
 
 ## Usage
 
@@ -50,10 +47,18 @@ $ npm install @form8ion/lift --save-prod
 
 ### Example
 
-```javascript
-import {lift} from '@form8ion/lift';
+#### Import
 
-lift({});
+```javascript
+import {lift, questionNames} from '@form8ion/lift';
+```
+
+#### Execute
+
+```javascript
+(async () => {
+  await lift({scaffolders: {foo: () => ({})}, decisions: {[questionNames.SCAFFOLDER]: 'foo'}, enhancers: {}});
+})();
 ```
 
 ### API
