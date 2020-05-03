@@ -1,3 +1,4 @@
+import {Remote, Repository} from 'nodegit';
 import sinon from 'sinon';
 import {assert} from 'chai';
 import any from '@travi/any';
@@ -10,6 +11,8 @@ suite('vcs', () => {
   setup(() => {
     sandbox = sinon.createSandbox();
 
+    sandbox.stub(Repository, 'open');
+    sandbox.stub(Remote, 'lookup');
     sandbox.stub(hostedGitInfo, 'fromUrl');
   });
 
@@ -19,9 +22,14 @@ suite('vcs', () => {
     test('that the existing details are determined from the remote origin', async () => {
       const owner = any.word();
       const name = any.word();
-      hostedGitInfo.fromUrl.returns({user: owner, project: name});
+      const remoteUrl = any.url();
+      const repository = any.simpleObject();
+      const projectRoot = any.string();
+      Repository.open.withArgs(projectRoot).resolves(repository);
+      Remote.lookup.withArgs(repository, 'origin').resolves({url: () => remoteUrl});
+      hostedGitInfo.fromUrl.withArgs(remoteUrl).returns({user: owner, project: name});
 
-      assert.deepEqual(await determineExistingHostDetails(), {owner, name});
+      assert.deepEqual(await determineExistingHostDetails({projectRoot}), {owner, name});
     });
   });
 });
