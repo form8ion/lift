@@ -71,6 +71,9 @@ import {lift, questionNames} from '@form8ion/lift';
   * receives an options object as the first argument
     * `projectRoot`: __string__ path of the working directory where the CLI
       command was executed
+    * `vcs`: __object__ details of the exisitng vcs and host
+      * `owner`: __string__ owner of the vcs host account
+      * `name`: __string__ name of the repository on the host
 
 #### `decisions` __object__ (_optional_)
 
