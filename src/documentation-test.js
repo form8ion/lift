@@ -5,6 +5,7 @@ import sinon from 'sinon';
 import {assert} from 'chai';
 import any from '@travi/any';
 import * as remark from '../thirdparty-wrappers/remark';
+import {settings} from '../.remarkrc';
 import liftDocumentation from './documentation';
 
 suite('documentation', () => {
@@ -19,8 +20,10 @@ suite('documentation', () => {
     sandbox.stub(fs, 'writeFileSync');
 
     const use = sinon.stub();
+    const data = sinon.stub();
     process = sinon.stub();
-    remark.default.returns({use});
+    remark.default.returns({data});
+    data.withArgs('settings', settings).returns({use});
     use.withArgs(legacyMarkerPlugin).returns({use});
     use.withArgs(badgePlugin, badges).returns({process});
   });
