@@ -43,6 +43,9 @@ Given('the existing README uses modern badge zones', async function () {
 <!--status-badges start -->
 <!--status-badges end -->
 
+1. item 1
+1. item 2
+
 <!--consumer-badges start -->
 <!--consumer-badges end -->
 
@@ -55,6 +58,9 @@ Given('the existing README uses legacy badge section markers', async function ()
   this.existingReadmeContent = `# project-name
 
 <!-- status badges -->
+
+1. item 1
+1. item 2
 
 <!-- consumer badges -->
 
@@ -70,6 +76,9 @@ Then('the badges from the scaffolder are added to the README', async function ()
 <!--status-badges start -->
 
 <!--status-badges end -->
+
+1. item 1
+1. item 2
 
 <!--consumer-badges start -->
 
@@ -111,6 +120,9 @@ Then('the badges remain as they were in the README', async function () {
 <!--status-badges start -->
 
 <!--status-badges end -->
+
+1. item 1
+1. item 2
 
 <!--consumer-badges start -->
 
