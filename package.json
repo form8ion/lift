@@ -53,6 +53,7 @@
     "@form8ion/remark-lint-preset": "1.0.6",
     "@rollup/plugin-commonjs": "11.1.0",
     "@travi/any": "2.0.8",
+    "@travi/travis-lint": "1.0.1",
     "ban-sensitive-files": "1.9.7",
     "chai": "4.2.0",
     "codecov": "3.7.0",
@@ -71,8 +72,7 @@
     "rimraf": "3.0.2",
     "rollup": "2.10.3",
     "rollup-plugin-auto-external": "2.0.0",
-    "sinon": "9.0.2",
-    "travis-lint": "1.0.0"
+    "sinon": "9.0.2"
   },
   "dependencies": {
     "@form8ion/overridable-prompts": "^1.0.1",
