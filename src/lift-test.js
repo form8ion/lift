@@ -10,6 +10,12 @@ import lift from './lift';
 
 suite('lift', () => {
   let sandbox;
+  const projectPath = any.string();
+  const scaffolders = any.simpleObject();
+  const decisions = any.simpleObject();
+  const enhancers = any.simpleObject();
+  const liftEnhancerResults = any.listOf(any.simpleObject);
+  const vcsDetails = any.simpleObject();
 
   setup(() => {
     sandbox = sinon.createSandbox();
@@ -25,22 +31,36 @@ suite('lift', () => {
   teardown(() => sandbox.restore());
 
   test('that the chosen scaffolder is executed', async () => {
-    const scaffolders = any.simpleObject();
-    const enhancers = any.simpleObject();
-    const decisions = any.simpleObject();
     const chosenScaffolder = sinon.stub();
-    const projectPath = any.string();
-    const vcsDetails = any.simpleObject();
     const scaffolderResults = {...any.simpleObject(), nextSteps: any.listOf(any.sentence)};
     vcs.determineExistingHostDetails.withArgs({projectRoot: projectPath}).resolves(vcsDetails);
     chooser.default.withArgs(scaffolders, decisions).resolves(chosenScaffolder);
     chosenScaffolder.withArgs({projectRoot: projectPath, vcs: vcsDetails}).resolves(scaffolderResults);
+    liftEnhancers.default
+      .withArgs({results: scaffolderResults, enhancers, projectRoot: projectPath})
+      .returns({nextSteps: liftEnhancerResults});
     process.cwd.returns(projectPath);
 
     await lift({scaffolders, decisions, enhancers});
 
     assert.calledWith(documentation.default, {results: scaffolderResults, projectRoot: projectPath});
-    assert.calledWith(liftEnhancers.default, {results: scaffolderResults, enhancers, projectRoot: projectPath});
-    assert.calledWith(resultsReporter.reportResults, {nextSteps: scaffolderResults.nextSteps});
+    assert.calledWith(
+      resultsReporter.reportResults,
+      {nextSteps: [...scaffolderResults.nextSteps, ...liftEnhancerResults]}
+    );
+  });
+
+  test('that a scaffolder that provides no `nextSteps` is handled as an empty list', async () => {
+    const chosenScaffolder = sinon.stub();
+    const scaffolderResults = any.simpleObject();
+    vcs.determineExistingHostDetails.withArgs({projectRoot: projectPath}).resolves(vcsDetails);
+    chooser.default.withArgs(scaffolders, decisions).resolves(chosenScaffolder);
+    liftEnhancers.default.returns({nextSteps: liftEnhancerResults});
+    chosenScaffolder.withArgs({projectRoot: projectPath, vcs: vcsDetails}).resolves(scaffolderResults);
+    process.cwd.returns(projectPath);
+
+    await lift({scaffolders, decisions, enhancers});
+
+    assert.calledWith(resultsReporter.reportResults, {nextSteps: liftEnhancerResults});
   });
 });

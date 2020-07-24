@@ -9,10 +9,10 @@ export default async function ({scaffolders, decisions, enhancers}) {
   const projectRoot = process.cwd();
   const results = await scaffolder({projectRoot, vcs: await determineExistingHostDetails({projectRoot})});
 
-  await Promise.all([
+  const [enhancerResults] = await Promise.all([
     applyEnhancers({results, enhancers, projectRoot}),
     liftDocumentation({projectRoot, results})
   ]);
 
-  reportResults({nextSteps: results.nextSteps});
+  reportResults({nextSteps: [...results.nextSteps ? results.nextSteps : [], ...enhancerResults.nextSteps]});
 }

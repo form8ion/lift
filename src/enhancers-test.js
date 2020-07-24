@@ -8,20 +8,26 @@ suite('enhancers', () => {
   const projectRoot = any.string();
 
   test('that an enhancer that matches the project is executed', async () => {
-    const lift = sinon.spy();
+    const lift = sinon.stub();
+    const anotherLift = sinon.stub();
     const test = sinon.stub();
     const otherLift = sinon.spy();
+    const liftNextSteps = any.listOf(any.simpleObject);
     test.withArgs({projectRoot}).resolves(true);
+    lift.withArgs({results, projectRoot}).resolves({nextSteps: liftNextSteps});
+    anotherLift.withArgs({results, projectRoot}).resolves(any.simpleObject());
 
-    await applyEnhancers({
+    const enhancerResults = await applyEnhancers({
       results,
       projectRoot,
       enhancers: {
         [any.word()]: {test, lift},
-        [any.word()]: {test: () => Promise.resolve(false), lift: otherLift}
+        [any.word()]: {test: () => Promise.resolve(false), lift: otherLift},
+        [any.word()]: {test, lift: anotherLift}
       }
     });
 
+    assert.deepEqual(enhancerResults, {nextSteps: liftNextSteps});
     assert.calledWith(lift, {results, projectRoot});
     assert.notCalled(otherLift);
   });
@@ -48,6 +54,6 @@ suite('enhancers', () => {
   });
 
   test('that no liftEnhancers are applied if none are provided', async () => {
-    await applyEnhancers({results});
+    assert.deepEqual(await applyEnhancers({results}), {nextSteps: []});
   });
 });
