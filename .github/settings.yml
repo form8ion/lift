@@ -4,3 +4,4 @@ repository:
   description: "tool for running sub-scaffolders on existing projects :aerial_tramway:"
   homepage: 'https://npm.im/@form8ion/lift'
   private: false
+topics: hacktoberfest
