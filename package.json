@@ -52,7 +52,7 @@
     "@form8ion/remark-lint-preset": "1.0.11",
     "@rollup/plugin-commonjs": "16.0.0",
     "@travi/any": "2.0.13",
-    "ban-sensitive-files": "1.9.12",
+    "ban-sensitive-files": "1.9.13",
     "chai": "4.2.0",
     "codecov": "3.8.1",
     "cucumber": "6.0.5",
