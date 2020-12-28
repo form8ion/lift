@@ -26,6 +26,8 @@ suite('lift', () => {
     sandbox.stub(liftEnhancers, 'default');
     sandbox.stub(vcs, 'determineExistingHostDetails');
     sandbox.stub(resultsReporter, 'reportResults');
+
+    process.cwd.returns(projectPath);
   });
 
   teardown(() => sandbox.restore());
@@ -39,7 +41,6 @@ suite('lift', () => {
     liftEnhancers.default
       .withArgs({results: scaffolderResults, enhancers, projectRoot: projectPath})
       .returns({nextSteps: liftEnhancerResults});
-    process.cwd.returns(projectPath);
 
     await lift({scaffolders, decisions, enhancers});
 
@@ -57,10 +58,21 @@ suite('lift', () => {
     chooser.default.withArgs(scaffolders, decisions).resolves(chosenScaffolder);
     liftEnhancers.default.returns({nextSteps: liftEnhancerResults});
     chosenScaffolder.withArgs({projectRoot: projectPath, vcs: vcsDetails}).resolves(scaffolderResults);
-    process.cwd.returns(projectPath);
 
     await lift({scaffolders, decisions, enhancers});
 
+    assert.calledWith(resultsReporter.reportResults, {nextSteps: liftEnhancerResults});
+  });
+
+  test('that choosing `General Maintenance` runs the enhancers without erroring', async () => {
+    chooser.default.resolves(undefined);
+    liftEnhancers.default
+      .withArgs({results: {}, enhancers, projectRoot: projectPath})
+      .returns({nextSteps: liftEnhancerResults});
+
+    await lift({scaffolders, decisions, enhancers});
+
+    assert.calledWith(documentation.default, {results: {}, projectRoot: projectPath});
     assert.calledWith(resultsReporter.reportResults, {nextSteps: liftEnhancerResults});
   });
 });

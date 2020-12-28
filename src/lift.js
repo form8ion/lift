@@ -7,7 +7,9 @@ import applyEnhancers from './enhancers';
 export default async function ({scaffolders, decisions, enhancers}) {
   const scaffolder = await chooseScaffolder(scaffolders, decisions);
   const projectRoot = process.cwd();
-  const results = await scaffolder({projectRoot, vcs: await determineExistingHostDetails({projectRoot})});
+  const results = scaffolder
+    ? await scaffolder({projectRoot, vcs: await determineExistingHostDetails({projectRoot})})
+    : {};
 
   const [enhancerResults] = await Promise.all([
     applyEnhancers({results, enhancers, projectRoot}),

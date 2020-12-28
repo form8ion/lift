@@ -1,3 +1,4 @@
+import {Separator} from 'inquirer';
 import * as overridablePrompts from '@form8ion/overridable-prompts';
 import {assert} from 'chai';
 import sinon from 'sinon';
@@ -27,7 +28,7 @@ suite('scaffolder chooser', () => {
           name: questionNames.SCAFFOLDER,
           message: 'Which scaffolder should be executed?',
           type: 'list',
-          choices: Object.keys(scaffolders)
+          choices: ['General Maintenance', new Separator(), Object.keys(scaffolders)]
         }],
         decisions
       )
