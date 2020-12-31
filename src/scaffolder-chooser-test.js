@@ -28,7 +28,7 @@ suite('scaffolder chooser', () => {
           name: questionNames.SCAFFOLDER,
           message: 'Which scaffolder should be executed?',
           type: 'list',
-          choices: ['General Maintenance', new Separator(), Object.keys(scaffolders)]
+          choices: ['General Maintenance', new Separator(), ...Object.keys(scaffolders)]
         }],
         decisions
       )
