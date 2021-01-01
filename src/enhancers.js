@@ -1,15 +1,17 @@
+import deepmerge from 'deepmerge';
+
 export default async function ({results, enhancers = {}, projectRoot}) {
-  const enhancerResults = await Promise.all(Object.values(enhancers).map(async enhancer => {
-    if (await enhancer.test({projectRoot})) {
-      return enhancer.lift({results, projectRoot});
-    }
+  return Object.values(enhancers)
+    .reduce(async (acc, enhancer) => {
+      if (await enhancer.test({projectRoot})) {
+        const previousResults = await acc;
 
-    return Promise.resolve();
-  }));
+        return deepmerge(
+          previousResults,
+          await enhancer.lift({results: previousResults, projectRoot})
+        );
+      }
 
-  return enhancerResults.reduce((acc, result) => {
-    if (result && result.nextSteps) return {nextSteps: [...acc.nextSteps, ...result.nextSteps]};
-
-    return acc;
-  }, {nextSteps: []});
+      return acc;
+    }, results);
 }

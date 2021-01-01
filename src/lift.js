@@ -16,5 +16,5 @@ export default async function ({scaffolders, decisions, enhancers}) {
     liftDocumentation({projectRoot, results})
   ]);
 
-  reportResults({nextSteps: [...results.nextSteps ? results.nextSteps : [], ...enhancerResults.nextSteps]});
+  reportResults({nextSteps: [...results.nextSteps || [], ...enhancerResults.nextSteps || []]});
 }

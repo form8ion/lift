@@ -13,9 +13,11 @@ suite('enhancers', () => {
     const test = sinon.stub();
     const otherLift = sinon.spy();
     const liftNextSteps = any.listOf(any.simpleObject);
+    const liftResults = {nextSteps: liftNextSteps};
+    const anotherLiftResults = any.simpleObject();
     test.withArgs({projectRoot}).resolves(true);
-    lift.withArgs({results, projectRoot}).resolves({nextSteps: liftNextSteps});
-    anotherLift.withArgs({results, projectRoot}).resolves(any.simpleObject());
+    lift.withArgs({results, projectRoot}).resolves(liftResults);
+    anotherLift.withArgs({results: {...results, ...liftResults}, projectRoot}).resolves(anotherLiftResults);
 
     const enhancerResults = await applyEnhancers({
       results,
@@ -27,7 +29,7 @@ suite('enhancers', () => {
       }
     });
 
-    assert.deepEqual(enhancerResults, {nextSteps: liftNextSteps});
+    assert.deepEqual(enhancerResults, {...results, ...liftResults, ...anotherLiftResults});
     assert.calledWith(lift, {results, projectRoot});
     assert.notCalled(otherLift);
   });
@@ -54,6 +56,6 @@ suite('enhancers', () => {
   });
 
   test('that no liftEnhancers are applied if none are provided', async () => {
-    assert.deepEqual(await applyEnhancers({results}), {nextSteps: []});
+    assert.deepEqual(await applyEnhancers({results}), results);
   });
 });
