@@ -1,6 +1,9 @@
 import deepmerge from 'deepmerge';
+import {info} from '@travi/cli-messages';
 
 export default async function ({results, enhancers = {}, projectRoot}) {
+  info('Applying Enhancers');
+
   return Object.values(enhancers)
     .reduce(async (acc, enhancer) => {
       if (await enhancer.test({projectRoot})) {
