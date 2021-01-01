@@ -1,15 +1,20 @@
+import deepmerge from 'deepmerge';
+import {info} from '@travi/cli-messages';
+
 export default async function ({results, enhancers = {}, projectRoot}) {
-  const enhancerResults = await Promise.all(Object.values(enhancers).map(async enhancer => {
-    if (await enhancer.test({projectRoot})) {
-      return enhancer.lift({results, projectRoot});
-    }
+  info('Applying Enhancers');
 
-    return Promise.resolve();
-  }));
+  return Object.values(enhancers)
+    .reduce(async (acc, enhancer) => {
+      if (await enhancer.test({projectRoot})) {
+        const previousResults = await acc;
 
-  return enhancerResults.reduce((acc, result) => {
-    if (result && result.nextSteps) return {nextSteps: [...acc.nextSteps, ...result.nextSteps]};
+        return deepmerge(
+          previousResults,
+          await enhancer.lift({results: previousResults, projectRoot})
+        );
+      }
 
-    return acc;
-  }, {nextSteps: []});
+      return acc;
+    }, results);
 }

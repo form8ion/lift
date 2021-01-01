@@ -78,6 +78,7 @@
     "@form8ion/remark-update-legacy-badge-markers": "1.0.1",
     "@form8ion/results-reporter": "^1.1.0",
     "@travi/cli-messages": "^1.0.4",
+    "deepmerge": "^4.2.2",
     "hosted-git-info": "^3.0.4",
     "inquirer": "^7.3.3",
     "mdast-zone": "^4.0.0",

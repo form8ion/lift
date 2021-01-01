@@ -64,6 +64,20 @@ suite('lift', () => {
     assert.calledWith(resultsReporter.reportResults, {nextSteps: liftEnhancerResults});
   });
 
+  test('that no `nextSteps` from enhancers is handled as an empty list', async () => {
+    const chosenScaffolder = sinon.stub();
+    const scaffolderNextSteps = any.listOf(any.sentence);
+    const scaffolderResults = {...any.simpleObject(), nextSteps: scaffolderNextSteps};
+    vcs.determineExistingHostDetails.withArgs({projectRoot: projectPath}).resolves(vcsDetails);
+    chooser.default.withArgs(scaffolders, decisions).resolves(chosenScaffolder);
+    liftEnhancers.default.returns({});
+    chosenScaffolder.withArgs({projectRoot: projectPath, vcs: vcsDetails}).resolves(scaffolderResults);
+
+    await lift({scaffolders, decisions, enhancers});
+
+    assert.calledWith(resultsReporter.reportResults, {nextSteps: scaffolderNextSteps});
+  });
+
   test('that choosing `General Maintenance` runs the enhancers without erroring', async () => {
     chooser.default.resolves(undefined);
     liftEnhancers.default
