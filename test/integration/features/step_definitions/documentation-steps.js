@@ -1,7 +1,11 @@
 import {promises as fs} from 'fs';
-import {Given, Then} from 'cucumber';
+import {Before, Given, Then} from 'cucumber';
 import {assert} from 'chai';
 import any from '@travi/any';
+
+Before(function () {
+  this.badgeDefinitions = [];
+});
 
 Given('the existing README has no section heading', async function () {
   return undefined;
@@ -12,9 +16,20 @@ Given('the existing README has no badges', async function () {
 });
 
 Given('the existing README has existing badges', async function () {
-  this.existingContributingBadges = `[![${any.word()}][${any.word()}-badge]][${any.word()}-link]
-[![${any.word()}][${any.word()}-badge]][${any.word()}-link]
+  const imageReference = `${any.word()}-badge`;
+  const linkReference = `${any.word()}-link`;
+  const otherImageReference = `${any.word()}-badge`;
+  const otherLinkReference = `${any.word()}-link`;
+
+  this.existingContributingBadges = `[![${any.word()}][${imageReference}]][${linkReference}]
+[![${any.word()}][${otherImageReference}]][${otherLinkReference}]
 `;
+  this.badgeDefinitions.push(`[${imageReference}]: ${any.url()}
+
+[${linkReference}]: ${any.url()}`);
+  this.badgeDefinitions.push(`[${otherImageReference}]: ${any.url()}
+
+[${otherLinkReference}]: ${any.url()}`);
 });
 
 Given('the chosen sub-scaffolder produces badges', async function () {
@@ -51,7 +66,9 @@ Given('the existing README uses modern badge zones', async function () {
 
 <!--contribution-badges start -->
 ${this.existingContributingBadges}
-<!--contribution-badges end -->`;
+<!--contribution-badges end -->
+
+${this.badgeDefinitions.join('\n\n')}`;
 });
 
 Given('the existing README uses legacy badge section markers', async function () {
@@ -65,12 +82,16 @@ Given('the existing README uses legacy badge section markers', async function ()
 <!-- consumer badges -->
 
 <!-- contribution badges -->
-${this.existingContributingBadges}`;
+${this.existingContributingBadges}
+
+${this.badgeDefinitions.join('\n\n')}`;
 });
 
 Then('the badges from the scaffolder are added to the README', async function () {
+  const actual = await fs.readFile(`${process.cwd()}/README.md`, 'utf-8');
+
   assert.equal(
-    await fs.readFile(`${process.cwd()}/README.md`, 'utf-8'),
+    actual,
     `# project-name
 
 <!--status-badges start -->
@@ -96,8 +117,11 @@ ${this.existingContributingBadges}${
     .join('\n')
 }
 
-<!--contribution-badges end -->
+<!--contribution-badges end -->${this.badgeDefinitions.length ? `
 
+${this.badgeDefinitions.join('\n\n')}
+` : `
+`}
 ${
   Object.entries(this.badges.contribution)
     .map(([name, details]) => (`${details.link
@@ -131,7 +155,10 @@ Then('the badges remain as they were in the README', async function () {
 <!--contribution-badges start -->
 
 ${this.existingContributingBadges}
-<!--contribution-badges end -->
-`
+<!--contribution-badges end -->${this.badgeDefinitions.length ? `
+
+${this.badgeDefinitions.join('\n\n')}
+` : `
+`}`
   );
 });
