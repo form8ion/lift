@@ -1,7 +1,7 @@
+import {lift as liftReadme} from '@form8ion/readme';
 import {reportResults} from '@form8ion/results-reporter';
 import chooseScaffolder from './scaffolder-chooser';
 import {determineExistingHostDetails} from './vcs';
-import liftDocumentation from './documentation';
 import applyEnhancers from './enhancers';
 
 export default async function ({scaffolders, decisions, enhancers}) {
@@ -13,7 +13,7 @@ export default async function ({scaffolders, decisions, enhancers}) {
 
   const [enhancerResults] = await Promise.all([
     applyEnhancers({results, enhancers, projectRoot}),
-    liftDocumentation({projectRoot, results})
+    liftReadme({projectRoot, results})
   ]);
 
   reportResults({nextSteps: [...results.nextSteps || [], ...enhancerResults.nextSteps || []]});

@@ -1,9 +1,9 @@
+import * as readme from '@form8ion/readme';
 import * as resultsReporter from '@form8ion/results-reporter';
 import sinon from 'sinon';
 import any from '@travi/any';
 import {assert} from 'chai';
 import * as chooser from './scaffolder-chooser';
-import * as documentation from './documentation';
 import * as liftEnhancers from './enhancers';
 import * as vcs from './vcs';
 import lift from './lift';
@@ -22,10 +22,10 @@ suite('lift', () => {
 
     sandbox.stub(process, 'cwd');
     sandbox.stub(chooser, 'default');
-    sandbox.stub(documentation, 'default');
     sandbox.stub(liftEnhancers, 'default');
     sandbox.stub(vcs, 'determineExistingHostDetails');
     sandbox.stub(resultsReporter, 'reportResults');
+    sandbox.stub(readme, 'lift');
 
     process.cwd.returns(projectPath);
   });
@@ -44,7 +44,7 @@ suite('lift', () => {
 
     await lift({scaffolders, decisions, enhancers});
 
-    assert.calledWith(documentation.default, {results: scaffolderResults, projectRoot: projectPath});
+    assert.calledWith(readme.lift, {results: scaffolderResults, projectRoot: projectPath});
     assert.calledWith(
       resultsReporter.reportResults,
       {nextSteps: [...scaffolderResults.nextSteps, ...liftEnhancerResults]}
@@ -86,7 +86,7 @@ suite('lift', () => {
 
     await lift({scaffolders, decisions, enhancers});
 
-    assert.calledWith(documentation.default, {results: {}, projectRoot: projectPath});
+    assert.calledWith(readme.lift, {results: {}, projectRoot: projectPath});
     assert.calledWith(resultsReporter.reportResults, {nextSteps: liftEnhancerResults});
   });
 });
