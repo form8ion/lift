@@ -79,7 +79,7 @@
     "@travi/cli-messages": "^1.0.4",
     "deepmerge": "^4.2.2",
     "hosted-git-info": "^3.0.4",
-    "inquirer": "^7.3.3",
+    "inquirer": "^8.0.0",
     "mdast-zone": "^4.0.0",
     "nodegit": "^0.27.0"
   }
