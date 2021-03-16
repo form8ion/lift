@@ -15,7 +15,7 @@ After(function () {
 When('the project is lifted', async function () {
   const chosenScaffolder = this.chosenScaffolder || any.word();
 
-  await fs.writeFile(`${process.cwd()}/README.md`, this.existingReadmeContent);
+  await fs.writeFile(`${process.cwd()}/README.md`, this.existingReadmeContent || '');
 
   await lift({
     scaffolders: {
