@@ -5,6 +5,9 @@
   "version": "0.0.0-semantically-released",
   "main": "lib/index.cjs.js",
   "module": "lib/index.es.js",
+  "engines": {
+    "node": ">=12.17"
+  },
   "sideEffects": false,
   "files": [
     "lib/"
@@ -24,6 +27,7 @@
     "lint:sensitive": "ban",
     "lint:peer": "npm ls >/dev/null",
     "lint:gherkin": "gherkin-lint",
+    "lint:engines": "check-engine",
     "test:unit": "nyc run-s test:unit:base",
     "test:unit:base": "DEBUG=any mocha 'src/**/*-test.js'",
     "test:integration": "run-s 'test:integration:base -- --profile noWip'",
@@ -54,6 +58,7 @@
     "@travi/any": "2.0.16",
     "ban-sensitive-files": "1.9.15",
     "chai": "4.3.4",
+    "check-engine": "1.10.0",
     "codecov": "3.8.2",
     "cucumber": "6.0.5",
     "cz-conventional-changelog": "3.3.0",
