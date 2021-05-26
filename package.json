@@ -44,7 +44,8 @@
     "build:js": "rollup --config",
     "watch": "run-s 'build:js -- --watch'",
     "prepack": "run-s build",
-    "coverage:report": "nyc report --reporter=text-lcov > coverage.lcov && codecov"
+    "coverage:report": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
+    "prepare": "husky install"
   },
   "devDependencies": {
     "@babel/register": "7.13.16",
