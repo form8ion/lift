@@ -37,7 +37,7 @@ suite('lift', () => {
     const scaffolderResults = {...any.simpleObject(), nextSteps: any.listOf(any.sentence)};
     vcs.determineExistingHostDetails.withArgs({projectRoot: projectPath}).resolves(vcsDetails);
     chooser.default.withArgs(scaffolders, decisions).resolves(chosenScaffolder);
-    chosenScaffolder.withArgs({projectRoot: projectPath, vcs: vcsDetails}).resolves(scaffolderResults);
+    chosenScaffolder.withArgs({projectRoot: projectPath, vcs: vcsDetails, decisions}).resolves(scaffolderResults);
     liftEnhancers.default
       .withArgs({results: scaffolderResults, enhancers, projectRoot: projectPath})
       .returns({nextSteps: liftEnhancerResults});
@@ -57,7 +57,7 @@ suite('lift', () => {
     vcs.determineExistingHostDetails.withArgs({projectRoot: projectPath}).resolves(vcsDetails);
     chooser.default.withArgs(scaffolders, decisions).resolves(chosenScaffolder);
     liftEnhancers.default.returns({nextSteps: liftEnhancerResults});
-    chosenScaffolder.withArgs({projectRoot: projectPath, vcs: vcsDetails}).resolves(scaffolderResults);
+    chosenScaffolder.withArgs({projectRoot: projectPath, vcs: vcsDetails, decisions}).resolves(scaffolderResults);
 
     await lift({scaffolders, decisions, enhancers});
 
@@ -71,7 +71,7 @@ suite('lift', () => {
     vcs.determineExistingHostDetails.withArgs({projectRoot: projectPath}).resolves(vcsDetails);
     chooser.default.withArgs(scaffolders, decisions).resolves(chosenScaffolder);
     liftEnhancers.default.returns({});
-    chosenScaffolder.withArgs({projectRoot: projectPath, vcs: vcsDetails}).resolves(scaffolderResults);
+    chosenScaffolder.withArgs({projectRoot: projectPath, vcs: vcsDetails, decisions}).resolves(scaffolderResults);
 
     await lift({scaffolders, decisions, enhancers});
 
