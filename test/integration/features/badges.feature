@@ -39,3 +39,10 @@ Feature: Base Functionality
     And the chosen sub-scaffolder produces badges
     When the project is lifted
     Then the badges from the scaffolder are added to the README
+
+  Scenario: Badges produced by enhancers
+    Given the existing README has existing badges
+    And the existing README uses modern badge zones
+    And the enhancers produce badges
+    When the project is lifted
+    Then the badges from the enhancers are added to the README

@@ -33,7 +33,23 @@ Given('the existing README has existing badges', async function () {
 });
 
 Given('the chosen sub-scaffolder produces badges', async function () {
-  this.badges = {
+  this.scaffolderBadges = {
+    contribution: {
+      [any.word()]: {
+        text: any.word(),
+        link: any.url(),
+        img: any.url()
+      },
+      [any.word()]: {
+        text: any.word(),
+        img: any.url()
+      }
+    }
+  };
+});
+
+Given('the enhancers produce badges', async function () {
+  this.enhancerBadges = {
     contribution: {
       [any.word()]: {
         text: any.word(),
@@ -49,7 +65,7 @@ Given('the chosen sub-scaffolder produces badges', async function () {
 });
 
 Given('the chosen sub-scaffolder does not produce badges', async function () {
-  this.badges = null;
+  this.scaffolderBadges = null;
 });
 
 Given('the existing README uses modern badge zones', async function () {
@@ -87,7 +103,7 @@ ${this.existingContributingBadges}
 ${this.badgeDefinitions.join('\n\n')}`;
 });
 
-Then('the badges from the scaffolder are added to the README', async function () {
+Then('the badges from the scaffolder/enhancers are added to the README', async function () {
   const actual = await fs.readFile(`${process.cwd()}/README.md`, 'utf-8');
 
   assert.equal(
@@ -108,13 +124,25 @@ Then('the badges from the scaffolder are added to the README', async function ()
 <!--contribution-badges start -->
 
 ${this.existingContributingBadges}${
-  Object.entries(this.badges.contribution)
-    .map(([name, details]) => (
-      details.link
-        ? `[![${details.text}][${name}-badge]][${name}-link]`
-        : `![${details.text}][${name}-badge]`
-    ))
-    .join('\n')
+  this.scaffolderBadges
+    ? Object.entries(this.scaffolderBadges.contribution)
+      .map(([name, details]) => (
+        details.link
+          ? `[![${details.text}][${name}-badge]][${name}-link]`
+          : `![${details.text}][${name}-badge]`
+      ))
+      .join('\n')
+    : ''
+}${
+  this.enhancerBadges
+    ? Object.entries(this.enhancerBadges.contribution)
+      .map(([name, details]) => (
+        details.link
+          ? `[![${details.text}][${name}-badge]][${name}-link]`
+          : `![${details.text}][${name}-badge]`
+      ))
+      .join('\n')
+    : ''
 }
 
 <!--contribution-badges end -->${this.badgeDefinitions.length ? `
@@ -123,14 +151,27 @@ ${this.badgeDefinitions.join('\n\n')}
 ` : `
 `}
 ${
-  Object.entries(this.badges.contribution)
-    .map(([name, details]) => (`${details.link
-      ? `[${name}-link]: ${details.link}
+  this.scaffolderBadges
+    ? Object.entries(this.scaffolderBadges.contribution)
+      .map(([name, details]) => (`${details.link
+        ? `[${name}-link]: ${details.link}
 
 `
-      : ''
-    }[${name}-badge]: ${details.img}`))
-    .join('\n\n')
+        : ''
+      }[${name}-badge]: ${details.img}`))
+      .join('\n\n')
+    : ''
+}${
+  this.enhancerBadges
+    ? Object.entries(this.enhancerBadges.contribution)
+      .map(([name, details]) => (`${details.link
+        ? `[${name}-link]: ${details.link}
+
+`
+        : ''
+      }[${name}-badge]: ${details.img}`))
+      .join('\n\n')
+    : ''
 }
 `
   );

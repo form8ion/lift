@@ -33,8 +33,14 @@ When('the project is lifted', async function () {
             decisions
           );
 
-          return {badges: this.badges};
+          return {badges: this.scaffolderBadges};
         }
+      }
+    },
+    enhancers: {
+      [any.word()]: {
+        test: () => true,
+        lift: () => ({...this.enhancerBadges && {badges: this.enhancerBadges}})
       }
     },
     decisions: {
