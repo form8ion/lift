@@ -1,7 +1,7 @@
 import {promises as fs} from 'fs';
 import {prompt} from '@form8ion/overridable-prompts';
 
-import {After, Before, When} from 'cucumber';
+import {After, Before, When} from '@cucumber/cucumber';
 import stubbedFs from 'mock-fs';
 import any from '@travi/any';
 
