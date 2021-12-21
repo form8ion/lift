@@ -27,7 +27,7 @@
     "lint:sensitive": "ban",
     "lint:peer": "npm ls >/dev/null",
     "lint:gherkin": "gherkin-lint",
-    "lint:engines": "check-engine",
+    "lint:engines": "ls-engines",
     "test:unit": "nyc run-s test:unit:base",
     "test:unit:base": "DEBUG=any mocha 'src/**/*-test.js'",
     "test:integration": "run-s 'test:integration:base -- --profile noWip'",
