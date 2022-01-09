@@ -43,7 +43,7 @@ suite('lift', () => {
     chooser.default.withArgs(scaffolders, decisions).resolves(chosenScaffolder);
     chosenScaffolder.withArgs({projectRoot: projectPath, vcs: vcsDetails, decisions}).resolves(scaffolderResults);
     liftEnhancers.default
-      .withArgs({results: scaffolderResults, enhancers, projectRoot: projectPath})
+      .withArgs({results: scaffolderResults, enhancers, options: {projectRoot: projectPath}})
       .returns(liftEnahancerResults);
 
     await lift({scaffolders, decisions, enhancers});
@@ -88,7 +88,7 @@ suite('lift', () => {
   test('that choosing `General Maintenance` runs the enhancers without erroring', async () => {
     chooser.default.resolves(undefined);
     liftEnhancers.default
-      .withArgs({results: {}, enhancers, projectRoot: projectPath})
+      .withArgs({results: {}, enhancers, options: {projectRoot: projectPath}})
       .returns(liftEnahancerResults);
 
     await lift({scaffolders, decisions, enhancers});

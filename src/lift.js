@@ -13,7 +13,7 @@ export default async function ({scaffolders, decisions, enhancers}) {
     ? await scaffolder({projectRoot, vcs: await determineExistingHostDetails({projectRoot}), decisions})
     : {};
 
-  const enhancerResults = await applyEnhancers({results, enhancers, projectRoot});
+  const enhancerResults = await applyEnhancers({results, enhancers, options: {projectRoot}});
 
   await liftReadme({projectRoot, results: deepmerge(results, enhancerResults)});
 
