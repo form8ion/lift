@@ -7,13 +7,14 @@ import {determineExistingHostDetails} from './vcs';
 import applyEnhancers from './enhancers';
 
 export default async function ({scaffolders, decisions, enhancers}) {
-  const scaffolder = await chooseScaffolder(scaffolders, decisions);
   const projectRoot = process.cwd();
+  const scaffolder = await chooseScaffolder(scaffolders, decisions);
+  const vcs = await determineExistingHostDetails({projectRoot});
   const results = scaffolder
-    ? await scaffolder({projectRoot, vcs: await determineExistingHostDetails({projectRoot}), decisions})
+    ? await scaffolder({projectRoot, vcs, decisions})
     : {};
 
-  const enhancerResults = await applyEnhancers({results, enhancers, options: {projectRoot}});
+  const enhancerResults = await applyEnhancers({results, enhancers, options: {projectRoot, vcs}});
 
   await liftReadme({projectRoot, results: deepmerge(results, enhancerResults)});
 

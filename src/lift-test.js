@@ -32,6 +32,7 @@ suite('lift', () => {
     sandbox.stub(readme, 'lift');
 
     process.cwd.returns(projectPath);
+    vcs.determineExistingHostDetails.withArgs({projectRoot: projectPath}).resolves(vcsDetails);
   });
 
   teardown(() => sandbox.restore());
@@ -39,11 +40,10 @@ suite('lift', () => {
   test('that the chosen scaffolder is executed', async () => {
     const chosenScaffolder = sinon.stub();
     const scaffolderResults = {...any.simpleObject(), nextSteps: any.listOf(any.sentence)};
-    vcs.determineExistingHostDetails.withArgs({projectRoot: projectPath}).resolves(vcsDetails);
     chooser.default.withArgs(scaffolders, decisions).resolves(chosenScaffolder);
     chosenScaffolder.withArgs({projectRoot: projectPath, vcs: vcsDetails, decisions}).resolves(scaffolderResults);
     liftEnhancers.default
-      .withArgs({results: scaffolderResults, enhancers, options: {projectRoot: projectPath}})
+      .withArgs({results: scaffolderResults, enhancers, options: {projectRoot: projectPath, vcs: vcsDetails}})
       .returns(liftEnahancerResults);
 
     await lift({scaffolders, decisions, enhancers});
@@ -61,7 +61,6 @@ suite('lift', () => {
   test('that a scaffolder that provides no `nextSteps` is handled as an empty list', async () => {
     const chosenScaffolder = sinon.stub();
     const scaffolderResults = any.simpleObject();
-    vcs.determineExistingHostDetails.withArgs({projectRoot: projectPath}).resolves(vcsDetails);
     chooser.default.withArgs(scaffolders, decisions).resolves(chosenScaffolder);
     liftEnhancers.default.returns({nextSteps: liftEnhancerNextSteps});
     chosenScaffolder.withArgs({projectRoot: projectPath, vcs: vcsDetails, decisions}).resolves(scaffolderResults);
@@ -75,7 +74,6 @@ suite('lift', () => {
     const chosenScaffolder = sinon.stub();
     const scaffolderNextSteps = any.listOf(any.sentence);
     const scaffolderResults = {...any.simpleObject(), nextSteps: scaffolderNextSteps};
-    vcs.determineExistingHostDetails.withArgs({projectRoot: projectPath}).resolves(vcsDetails);
     chooser.default.withArgs(scaffolders, decisions).resolves(chosenScaffolder);
     liftEnhancers.default.returns({});
     chosenScaffolder.withArgs({projectRoot: projectPath, vcs: vcsDetails, decisions}).resolves(scaffolderResults);
@@ -88,7 +86,7 @@ suite('lift', () => {
   test('that choosing `General Maintenance` runs the enhancers without erroring', async () => {
     chooser.default.resolves(undefined);
     liftEnhancers.default
-      .withArgs({results: {}, enhancers, options: {projectRoot: projectPath}})
+      .withArgs({results: {}, enhancers, options: {projectRoot: projectPath, vcs: vcsDetails}})
       .returns(liftEnahancerResults);
 
     await lift({scaffolders, decisions, enhancers});
