@@ -1,10 +1,10 @@
 import deepmerge from 'deepmerge';
+import {applyEnhancers} from '@form8ion/core';
 import {lift as liftReadme} from '@form8ion/readme';
 import {reportResults} from '@form8ion/results-reporter';
 
 import chooseScaffolder from './scaffolder-chooser';
 import {determineExistingHostDetails} from './vcs';
-import applyEnhancers from './enhancers';
 
 export default async function ({scaffolders, decisions, enhancers}) {
   const projectRoot = process.cwd();

@@ -1,4 +1,5 @@
 import deepmerge from 'deepmerge';
+import * as core from '@form8ion/core';
 import * as readme from '@form8ion/readme';
 import * as resultsReporter from '@form8ion/results-reporter';
 
@@ -7,7 +8,6 @@ import any from '@travi/any';
 import {assert} from 'chai';
 
 import * as chooser from './scaffolder-chooser';
-import * as liftEnhancers from './enhancers';
 import * as vcs from './vcs';
 import lift from './lift';
 
@@ -26,7 +26,7 @@ suite('lift', () => {
 
     sandbox.stub(process, 'cwd');
     sandbox.stub(chooser, 'default');
-    sandbox.stub(liftEnhancers, 'default');
+    sandbox.stub(core, 'applyEnhancers');
     sandbox.stub(vcs, 'determineExistingHostDetails');
     sandbox.stub(resultsReporter, 'reportResults');
     sandbox.stub(readme, 'lift');
@@ -42,7 +42,7 @@ suite('lift', () => {
     const scaffolderResults = {...any.simpleObject(), nextSteps: any.listOf(any.sentence)};
     chooser.default.withArgs(scaffolders, decisions).resolves(chosenScaffolder);
     chosenScaffolder.withArgs({projectRoot: projectPath, vcs: vcsDetails, decisions}).resolves(scaffolderResults);
-    liftEnhancers.default
+    core.applyEnhancers
       .withArgs({results: scaffolderResults, enhancers, options: {projectRoot: projectPath, vcs: vcsDetails}})
       .returns(liftEnahancerResults);
 
@@ -62,7 +62,7 @@ suite('lift', () => {
     const chosenScaffolder = sinon.stub();
     const scaffolderResults = any.simpleObject();
     chooser.default.withArgs(scaffolders, decisions).resolves(chosenScaffolder);
-    liftEnhancers.default.returns({nextSteps: liftEnhancerNextSteps});
+    core.applyEnhancers.returns({nextSteps: liftEnhancerNextSteps});
     chosenScaffolder.withArgs({projectRoot: projectPath, vcs: vcsDetails, decisions}).resolves(scaffolderResults);
 
     await lift({scaffolders, decisions, enhancers});
@@ -75,7 +75,7 @@ suite('lift', () => {
     const scaffolderNextSteps = any.listOf(any.sentence);
     const scaffolderResults = {...any.simpleObject(), nextSteps: scaffolderNextSteps};
     chooser.default.withArgs(scaffolders, decisions).resolves(chosenScaffolder);
-    liftEnhancers.default.returns({});
+    core.applyEnhancers.returns({});
     chosenScaffolder.withArgs({projectRoot: projectPath, vcs: vcsDetails, decisions}).resolves(scaffolderResults);
 
     await lift({scaffolders, decisions, enhancers});
@@ -85,7 +85,7 @@ suite('lift', () => {
 
   test('that choosing `General Maintenance` runs the enhancers without erroring', async () => {
     chooser.default.resolves(undefined);
-    liftEnhancers.default
+    core.applyEnhancers
       .withArgs({results: {}, enhancers, options: {projectRoot: projectPath, vcs: vcsDetails}})
       .returns(liftEnahancerResults);
 
