@@ -1,6 +1,4 @@
-import deepmerge from 'deepmerge';
-import * as core from '@form8ion/core';
-import * as readme from '@form8ion/readme';
+import * as project from '@form8ion/project';
 import * as resultsReporter from '@form8ion/results-reporter';
 
 import sinon from 'sinon';
@@ -17,8 +15,8 @@ suite('lift', () => {
   const scaffolders = any.simpleObject();
   const decisions = any.simpleObject();
   const enhancers = any.simpleObject();
-  const liftEnhancerNextSteps = any.listOf(any.simpleObject);
-  const liftEnahancerResults = {...any.simpleObject(), nextSteps: liftEnhancerNextSteps};
+  const liftProjectNextSteps = any.listOf(any.simpleObject);
+  const liftProjectResults = {...any.simpleObject(), nextSteps: liftProjectNextSteps};
   const vcsDetails = any.simpleObject();
 
   setup(() => {
@@ -26,10 +24,9 @@ suite('lift', () => {
 
     sandbox.stub(process, 'cwd');
     sandbox.stub(chooser, 'default');
-    sandbox.stub(core, 'applyEnhancers');
     sandbox.stub(vcs, 'determineExistingHostDetails');
     sandbox.stub(resultsReporter, 'reportResults');
-    sandbox.stub(readme, 'lift');
+    sandbox.stub(project, 'lift');
 
     process.cwd.returns(projectPath);
     vcs.determineExistingHostDetails.withArgs({projectRoot: projectPath}).resolves(vcsDetails);
@@ -42,56 +39,23 @@ suite('lift', () => {
     const scaffolderResults = {...any.simpleObject(), nextSteps: any.listOf(any.sentence)};
     chooser.default.withArgs(scaffolders, decisions).resolves(chosenScaffolder);
     chosenScaffolder.withArgs({projectRoot: projectPath, vcs: vcsDetails, decisions}).resolves(scaffolderResults);
-    core.applyEnhancers
-      .withArgs({results: scaffolderResults, enhancers, options: {projectRoot: projectPath, vcs: vcsDetails}})
-      .returns(liftEnahancerResults);
+    project.lift
+      .withArgs({projectRoot: projectPath, results: scaffolderResults, vcs: vcsDetails, enhancers})
+      .resolves(liftProjectResults);
 
     await lift({scaffolders, decisions, enhancers});
 
-    assert.calledWith(
-      readme.lift,
-      {results: deepmerge(scaffolderResults, liftEnahancerResults), projectRoot: projectPath}
-    );
-    assert.calledWith(
-      resultsReporter.reportResults,
-      {nextSteps: [...scaffolderResults.nextSteps, ...liftEnhancerNextSteps]}
-    );
-  });
-
-  test('that a scaffolder that provides no `nextSteps` is handled as an empty list', async () => {
-    const chosenScaffolder = sinon.stub();
-    const scaffolderResults = any.simpleObject();
-    chooser.default.withArgs(scaffolders, decisions).resolves(chosenScaffolder);
-    core.applyEnhancers.returns({nextSteps: liftEnhancerNextSteps});
-    chosenScaffolder.withArgs({projectRoot: projectPath, vcs: vcsDetails, decisions}).resolves(scaffolderResults);
-
-    await lift({scaffolders, decisions, enhancers});
-
-    assert.calledWith(resultsReporter.reportResults, {nextSteps: liftEnhancerNextSteps});
-  });
-
-  test('that no `nextSteps` from enhancers is handled as an empty list', async () => {
-    const chosenScaffolder = sinon.stub();
-    const scaffolderNextSteps = any.listOf(any.sentence);
-    const scaffolderResults = {...any.simpleObject(), nextSteps: scaffolderNextSteps};
-    chooser.default.withArgs(scaffolders, decisions).resolves(chosenScaffolder);
-    core.applyEnhancers.returns({});
-    chosenScaffolder.withArgs({projectRoot: projectPath, vcs: vcsDetails, decisions}).resolves(scaffolderResults);
-
-    await lift({scaffolders, decisions, enhancers});
-
-    assert.calledWith(resultsReporter.reportResults, {nextSteps: scaffolderNextSteps});
+    assert.calledWith(resultsReporter.reportResults, {nextSteps: liftProjectNextSteps});
   });
 
   test('that choosing `General Maintenance` runs the enhancers without erroring', async () => {
     chooser.default.resolves(undefined);
-    core.applyEnhancers
-      .withArgs({results: {}, enhancers, options: {projectRoot: projectPath, vcs: vcsDetails}})
-      .returns(liftEnahancerResults);
+    project.lift
+      .withArgs({projectRoot: projectPath, results: {}, vcs: vcsDetails, enhancers})
+      .resolves(liftProjectResults);
 
     await lift({scaffolders, decisions, enhancers});
 
-    assert.calledWith(readme.lift, {results: liftEnahancerResults, projectRoot: projectPath});
-    assert.calledWith(resultsReporter.reportResults, {nextSteps: liftEnhancerNextSteps});
+    assert.calledWith(resultsReporter.reportResults, {nextSteps: liftProjectNextSteps});
   });
 });

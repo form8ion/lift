@@ -1,7 +1,5 @@
-import deepmerge from 'deepmerge';
-import {applyEnhancers} from '@form8ion/core';
-import {lift as liftReadme} from '@form8ion/readme';
 import {reportResults} from '@form8ion/results-reporter';
+import {lift} from '@form8ion/project';
 
 import chooseScaffolder from './scaffolder-chooser';
 import {determineExistingHostDetails} from './vcs';
@@ -14,9 +12,7 @@ export default async function ({scaffolders, decisions, enhancers}) {
     ? await scaffolder({projectRoot, vcs, decisions})
     : {};
 
-  const enhancerResults = await applyEnhancers({results, enhancers, options: {projectRoot, vcs}});
+  const liftResults = await lift({projectRoot, vcs, enhancers, results});
 
-  await liftReadme({projectRoot, results: deepmerge(results, enhancerResults)});
-
-  reportResults({nextSteps: [...results.nextSteps || [], ...enhancerResults.nextSteps || []]});
+  reportResults({nextSteps: liftResults.nextSteps});
 }
