@@ -42,6 +42,7 @@ tool for running sub-scaffolders on existing projects :aerial_tramway:
 [![npm][npm-badge]][npm-link]
 [![Try @form8ion/lift on RunKit][runkit-badge]][runkit-link]
 [![MIT license][license-badge]][license-link]
+![node][node-badge]
 
 <!--consumer-badges end -->
 
@@ -163,3 +164,5 @@ $ npm test
 [coverage-link]: https://codecov.io/github/form8ion/lift
 
 [coverage-badge]: https://img.shields.io/codecov/c/github/form8ion/lift.svg
+
+[node-badge]: https://img.shields.io/node/v/@form8ion/lift?logo=node.js
