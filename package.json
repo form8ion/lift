@@ -55,7 +55,7 @@
     "@form8ion/eslint-config-cucumber": "1.4.1",
     "@form8ion/eslint-config-mocha": "2.0.1",
     "@form8ion/remark-lint-preset": "3.0.0",
-    "@rollup/plugin-commonjs": "21.1.0",
+    "@rollup/plugin-commonjs": "22.0.0",
     "@travi/any": "2.0.20",
     "ban-sensitive-files": "1.9.18",
     "c8": "7.11.2",
