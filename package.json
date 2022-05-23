@@ -6,7 +6,7 @@
   "main": "lib/index.cjs.js",
   "module": "lib/index.es.js",
   "engines": {
-    "node": "^14.15.0"
+    "node": "^16.0.0"
   },
   "sideEffects": false,
   "files": [
