@@ -1,4 +1,4 @@
-import {Remote, Repository} from 'nodegit';
+import {Remote, Repository} from '@form8ion/nodegit-wrapper';
 import sinon from 'sinon';
 import {assert} from 'chai';
 import any from '@travi/any';
