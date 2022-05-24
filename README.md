@@ -103,6 +103,9 @@ applying the provided predicate function to the current project
       command was executed
     * `results`: __object__ results returned from executing the chosen
       sub-scaffolder
+    * `vcs`: __object__ details of the exisitng vcs and host
+      * `owner`: __string__ owner of the vcs host account
+      * `name`: __string__ name of the repository on the host
 
 ## Contributing
 
