@@ -1,4 +1,4 @@
-import {Remote, Repository} from 'nodegit';
+import {Remote, Repository} from '@form8ion/nodegit-wrapper';
 import hostedGitInfo from 'hosted-git-info';
 
 export async function determineExistingHostDetails({projectRoot}) {
