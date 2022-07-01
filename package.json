@@ -10,7 +10,7 @@
     "import": "./lib/index.mjs"
   },
   "engines": {
-    "node": "^14.15 || ^16.0.0"
+    "node": "^14.18 || ^16.0.0"
   },
   "sideEffects": false,
   "files": [
@@ -40,7 +40,7 @@
     "test:integration:debug": "DEBUG=test run-s test:integration",
     "test:integration:wip": "run-s 'test:integration:base -- --profile wip'",
     "test:integration:focus": "run-s 'test:integration:base -- --profile focus'",
-    "pregenerate:md": "npm run build",
+    "pregenerate:md": "run-s build",
     "generate:md": "remark . --output",
     "clean": "rimraf ./lib",
     "prebuild": "run-s clean",
