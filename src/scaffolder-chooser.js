@@ -1,5 +1,4 @@
-import {Separator} from 'inquirer';
-import {prompt} from '@form8ion/overridable-prompts';
+import {prompt, Separator} from '@form8ion/overridable-prompts';
 import {questionNames} from './question-names';
 
 export default async function (scaffolders, decisions) {
