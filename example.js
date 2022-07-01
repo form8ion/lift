@@ -1,7 +1,7 @@
 // #### Import
 // remark-usage-ignore-next
 import stubbedFs from 'mock-fs';
-import {lift, questionNames} from './lib/index.cjs';
+import {lift, questionNames} from './lib/index.js';
 
 // remark-usage-ignore-next
 stubbedFs();

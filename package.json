@@ -3,10 +3,14 @@
   "description": "tool for running sub-scaffolders on existing projects",
   "license": "MIT",
   "version": "0.0.0-semantically-released",
-  "main": "lib/index.cjs.js",
-  "module": "lib/index.es.js",
+  "main": "./lib/index.js",
+  "module": "./lib/index.mjs",
+  "exports": {
+    "require": "./lib/index.js",
+    "import": "./lib/index.mjs"
+  },
   "engines": {
-    "node": "^14.15 || ^16.0.0"
+    "node": "^14.18 || ^16.0.0"
   },
   "sideEffects": false,
   "files": [
@@ -32,11 +36,11 @@
     "test:unit:base": "DEBUG=any mocha 'src/**/*-test.js'",
     "test:integration": "run-s 'test:integration:base -- --profile noWip'",
     "pretest:integration:base": "npm run build:js",
-    "test:integration:base": "NODE_OPTIONS=--enable-source-maps cucumber-js test/integration --profile base",
+    "test:integration:base": "NODE_OPTIONS=--enable-source-maps cucumber-js test/integration",
     "test:integration:debug": "DEBUG=test run-s test:integration",
     "test:integration:wip": "run-s 'test:integration:base -- --profile wip'",
     "test:integration:focus": "run-s 'test:integration:base -- --profile focus'",
-    "pregenerate:md": "npm run build",
+    "pregenerate:md": "run-s build",
     "generate:md": "remark . --output",
     "clean": "rimraf ./lib",
     "prebuild": "run-s clean",
@@ -79,11 +83,10 @@
   },
   "dependencies": {
     "@form8ion/nodegit-wrapper": "^1.1.0",
-    "@form8ion/overridable-prompts": "^1.0.1",
+    "@form8ion/overridable-prompts": "^1.2.0",
     "@form8ion/project": "^13.1.0",
     "@form8ion/results-reporter": "^1.1.0",
     "@travi/cli-messages": "^1.0.4",
-    "hosted-git-info": "^5.0.0",
-    "inquirer": "^8.0.0"
+    "hosted-git-info": "^5.0.0"
   }
 }

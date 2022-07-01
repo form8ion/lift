@@ -1,11 +1,12 @@
-import {promises as fs} from 'fs';
+import {promises as fs} from 'node:fs';
 import {prompt} from '@form8ion/overridable-prompts';
 
 import {After, Before, When} from '@cucumber/cucumber';
 import stubbedFs from 'mock-fs';
 import any from '@travi/any';
 
-import {lift, questionNames} from '../../../../src';
+// eslint-disable-next-line import/no-extraneous-dependencies,import/no-unresolved
+import {lift, questionNames} from '@form8ion/lift';
 
 Before(async function () {
   stubbedFs({'README.md': ''});
