@@ -12,6 +12,7 @@ suite('vcs', () => {
     sandbox = sinon.createSandbox();
 
     sandbox.stub(Repository, 'open');
+    sandbox.stub(Repository, 'discover');
     sandbox.stub(Remote, 'lookup');
     sandbox.stub(hostedGitInfo, 'fromUrl');
   });
@@ -26,7 +27,9 @@ suite('vcs', () => {
       const remoteUrl = any.url();
       const repository = any.simpleObject();
       const projectRoot = any.string();
-      Repository.open.withArgs(projectRoot).resolves(repository);
+      const repositoryRoot = any.string();
+      Repository.discover.withArgs(projectRoot, 0).resolves(repositoryRoot);
+      Repository.open.withArgs(repositoryRoot).resolves(repository);
       Remote.lookup.withArgs(repository, 'origin').resolves({url: () => remoteUrl});
       hostedGitInfo.fromUrl.withArgs(remoteUrl).returns({user: owner, project: name, type: host});
 
