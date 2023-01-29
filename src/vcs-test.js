@@ -1,8 +1,10 @@
-import {Remote, Repository} from '@form8ion/nodegit-wrapper';
+import * as simpleGit from 'simple-git';
+import hostedGitInfo from 'hosted-git-info';
+
 import sinon from 'sinon';
 import {assert} from 'chai';
 import any from '@travi/any';
-import hostedGitInfo from 'hosted-git-info';
+
 import {determineExistingHostDetails} from './vcs';
 
 suite('vcs', () => {
@@ -11,9 +13,7 @@ suite('vcs', () => {
   setup(() => {
     sandbox = sinon.createSandbox();
 
-    sandbox.stub(Repository, 'open');
-    sandbox.stub(Repository, 'discover');
-    sandbox.stub(Remote, 'lookup');
+    sandbox.stub(simpleGit, 'simpleGit');
     sandbox.stub(hostedGitInfo, 'fromUrl');
   });
 
@@ -25,12 +25,10 @@ suite('vcs', () => {
       const name = any.word();
       const host = any.word();
       const remoteUrl = any.url();
-      const repository = any.simpleObject();
       const projectRoot = any.string();
-      const repositoryRoot = any.string();
-      Repository.discover.withArgs(projectRoot, 0).resolves(repositoryRoot);
-      Repository.open.withArgs(repositoryRoot).resolves(repository);
-      Remote.lookup.withArgs(repository, 'origin').resolves({url: () => remoteUrl});
+      const remote = sinon.stub();
+      simpleGit.simpleGit.withArgs(projectRoot).returns({remote});
+      remote.withArgs(['get-url', 'origin']).resolves(remoteUrl);
       hostedGitInfo.fromUrl.withArgs(remoteUrl).returns({user: owner, project: name, type: host});
 
       assert.deepEqual(await determineExistingHostDetails({projectRoot}), {owner, name, host});

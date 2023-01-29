@@ -1,9 +1,10 @@
-import {Remote, Repository} from '@form8ion/nodegit-wrapper';
+import {simpleGit} from 'simple-git';
 import hostedGitInfo from 'hosted-git-info';
 
 export async function determineExistingHostDetails({projectRoot}) {
-  const remoteOrigin = await Remote.lookup(await Repository.open(await Repository.discover(projectRoot, 0)), 'origin');
-  const {user: owner, project: name, type: host} = hostedGitInfo.fromUrl(remoteOrigin.url());
+  const git = simpleGit(projectRoot);
+  const remoteOrigin = await git.remote(['get-url', 'origin']);
+  const {user: owner, project: name, type: host} = hostedGitInfo.fromUrl(remoteOrigin);
 
   return {owner, name, host};
 }
