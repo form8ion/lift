@@ -6,6 +6,7 @@ tool for running sub-scaffolders on existing projects :aerial_tramway:
 
 [![Node CI Workflow Status][github-actions-ci-badge]][github-actions-ci-link]
 [![Codecov][coverage-badge]][coverage-link]
+[![OpenSSF Scorecard][ossfScorecard-badge]][ossfScorecard-link]
 
 <!--status-badges end -->
 
@@ -169,3 +170,7 @@ $ npm test
 [coverage-badge]: https://img.shields.io/codecov/c/github/form8ion/lift.svg
 
 [node-badge]: https://img.shields.io/node/v/@form8ion/lift?logo=node.js
+
+[ossfScorecard-link]: https://api.securityscorecards.dev/projects/github.com/form8ion/lift
+
+[ossfScorecard-badge]: https://api.securityscorecards.dev/projects/github.com/form8ion/lift/badge
