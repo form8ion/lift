@@ -1,8 +1,8 @@
 import {reportResults} from '@form8ion/results-reporter';
 import {lift} from '@form8ion/project';
 
-import chooseScaffolder from './scaffolder-chooser';
-import {determineExistingHostDetails} from './vcs';
+import chooseScaffolder from './scaffolder-chooser.js';
+import {determineExistingHostDetails} from './vcs.js';
 
 export default async function ({scaffolders, decisions, enhancers}) {
   const projectRoot = process.cwd();

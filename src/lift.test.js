@@ -5,14 +5,14 @@ import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest';
 import any from '@travi/any';
 import {when} from 'jest-when';
 
-import * as chooser from './scaffolder-chooser';
-import * as vcs from './vcs';
-import lift from './lift';
+import * as chooser from './scaffolder-chooser.js';
+import * as vcs from './vcs.js';
+import lift from './lift.js';
 
 vi.mock('@form8ion/project');
 vi.mock('@form8ion/results-reporter');
-vi.mock('./scaffolder-chooser');
-vi.mock('./vcs');
+vi.mock('./scaffolder-chooser.js');
+vi.mock('./vcs.js');
 
 describe('lift', () => {
   const originalProcessCwd = process.cwd;

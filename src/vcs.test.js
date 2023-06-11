@@ -5,7 +5,7 @@ import {afterEach, describe, expect, it, vi} from 'vitest';
 import any from '@travi/any';
 import {when} from 'jest-when';
 
-import {determineExistingHostDetails} from './vcs';
+import {determineExistingHostDetails} from './vcs.js';
 
 vi.mock('simple-git');
 vi.mock('hosted-git-info');
