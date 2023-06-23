@@ -171,6 +171,6 @@ $ npm test
 
 [node-badge]: https://img.shields.io/node/v/@form8ion/lift?logo=node.js
 
-[ossfScorecard-link]: https://api.securityscorecards.dev/projects/github.com/form8ion/lift
+[ossfScorecard-link]: https://securityscorecards.dev/viewer/?uri=github.com/form8ion/lift
 
 [ossfScorecard-badge]: https://api.securityscorecards.dev/projects/github.com/form8ion/lift/badge
