@@ -53,7 +53,7 @@
     "@form8ion/project": "^17.0.0-beta.2",
     "@form8ion/results-reporter": "^1.1.0",
     "@travi/cli-messages": "^1.0.4",
-    "hosted-git-info": "^6.0.0",
+    "hosted-git-info": "^7.0.0",
     "simple-git": "^3.16.0"
   },
   "devDependencies": {
