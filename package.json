@@ -57,7 +57,7 @@
     "simple-git": "^3.16.0"
   },
   "devDependencies": {
-    "@babel/register": "7.22.5",
+    "@babel/register": "7.22.15",
     "@cucumber/cucumber": "9.5.0",
     "@form8ion/commitlint-config": "1.0.55",
     "@form8ion/eslint-config": "6.0.3",
