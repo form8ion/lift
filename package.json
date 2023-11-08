@@ -39,7 +39,8 @@
     "build:js": "rollup --config",
     "watch": "run-s 'build:js -- --watch'",
     "prepack": "run-s build",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "lint:publish": "publint --strict"
   },
   "files": [
     "lib/"
@@ -77,6 +78,7 @@
     "ls-engines": "0.9.0",
     "mock-fs": "5.2.0",
     "npm-run-all2": "6.1.1",
+    "publint": "0.2.5",
     "remark-cli": "12.0.0",
     "remark-toc": "9.0.0",
     "remark-usage": "11.0.1",
