@@ -5,7 +5,7 @@
   "version": "0.0.0-semantically-released",
   "type": "module",
   "engines": {
-    "node": "^16.14.0 || >=18"
+    "node": "^18.17.0 || >=20.6.1"
   },
   "author": "Matt Travi <npm@travi.org> (https://matt.travi.org/)",
   "repository": "form8ion/lift",
@@ -39,7 +39,8 @@
     "build:js": "rollup --config",
     "watch": "run-s 'build:js -- --watch'",
     "prepack": "run-s build",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "lint:publish": "publint --strict"
   },
   "files": [
     "lib/"
@@ -58,7 +59,7 @@
   },
   "devDependencies": {
     "@babel/register": "7.22.15",
-    "@cucumber/cucumber": "9.6.0",
+    "@cucumber/cucumber": "10.0.1",
     "@form8ion/commitlint-config": "1.0.61",
     "@form8ion/eslint-config": "7.0.4",
     "@form8ion/eslint-config-cucumber": "1.4.1",
@@ -77,6 +78,7 @@
     "ls-engines": "0.9.0",
     "mock-fs": "5.2.0",
     "npm-run-all2": "6.1.1",
+    "publint": "0.2.5",
     "remark-cli": "12.0.0",
     "remark-toc": "9.0.0",
     "remark-usage": "11.0.1",
