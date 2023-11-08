@@ -136,7 +136,7 @@ $ npm test
 
 [npm-link]: https://www.npmjs.com/package/@form8ion/lift
 
-[npm-badge]: https://img.shields.io/npm/v/@form8ion/lift.svg
+[npm-badge]: https://img.shields.io/npm/v/@form8ion/lift?logo=npm
 
 [runkit-link]: https://npm.runkit.com/@form8ion/lift
 
@@ -168,7 +168,7 @@ $ npm test
 
 [coverage-link]: https://codecov.io/github/form8ion/lift
 
-[coverage-badge]: https://img.shields.io/codecov/c/github/form8ion/lift.svg
+[coverage-badge]: https://img.shields.io/codecov/c/github/form8ion/lift?logo=codecov
 
 [node-badge]: https://img.shields.io/node/v/@form8ion/lift?logo=node.js
 
