@@ -1,4 +1,4 @@
-import {prompt, Separator} from '@form8ion/overridable-prompts';
+import {prompt} from '@form8ion/overridable-prompts';
 
 import {questionNames} from './question-names.js';
 
@@ -8,7 +8,7 @@ export default async function (scaffolders, decisions) {
       name: questionNames.SCAFFOLDER,
       message: 'Which scaffolder should be executed?',
       type: 'list',
-      choices: ['General Maintenance', new Separator(), ...Object.keys(scaffolders)]
+      choices: ['General Maintenance', ...Object.keys(scaffolders)]
     }],
     decisions
   );

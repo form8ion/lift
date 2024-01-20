@@ -24,7 +24,7 @@ describe('scaffolder chooser', () => {
         name: questionNames.SCAFFOLDER,
         message: 'Which scaffolder should be executed?',
         type: 'list',
-        choices: ['General Maintenance', new overridablePrompts.Separator(), ...Object.keys(scaffolders)]
+        choices: ['General Maintenance', ...Object.keys(scaffolders)]
       }],
       decisions
     ).mockResolvedValue({[questionNames.SCAFFOLDER]: chosenScaffolderName});
