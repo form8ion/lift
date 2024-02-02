@@ -1,5 +1,5 @@
 import * as simpleGit from 'simple-git';
-import hostedGitInfo from 'hosted-git-info';
+import GitUrlParse from 'git-url-parse';
 
 import {afterEach, describe, expect, it, vi} from 'vitest';
 import any from '@travi/any';
@@ -8,7 +8,7 @@ import {when} from 'jest-when';
 import {determineExistingHostDetails} from './vcs.js';
 
 vi.mock('simple-git');
-vi.mock('hosted-git-info');
+vi.mock('git-url-parse');
 
 describe('vcs', () => {
   afterEach(() => {
@@ -24,7 +24,7 @@ describe('vcs', () => {
     const remote = vi.fn();
     when(simpleGit.simpleGit).calledWith(projectRoot).mockReturnValue({remote});
     when(remote).calledWith(['get-url', 'origin']).mockResolvedValue(remoteUrl);
-    when(hostedGitInfo.fromUrl).calledWith(remoteUrl).mockReturnValue({user: owner, project: name, type: host});
+    when(GitUrlParse).calledWith(remoteUrl).mockReturnValue({user: owner, project: name, type: host});
 
     expect(await determineExistingHostDetails({projectRoot})).toEqual({owner, name, host});
   });
