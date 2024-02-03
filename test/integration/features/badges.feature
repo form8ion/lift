@@ -5,6 +5,7 @@ Feature: Base Functionality
     And the existing README has no badges
     And the existing README uses modern badge zones
     And the chosen sub-scaffolder produces badges
+    And the repository hosted on "github.com"
     When the project is lifted
     Then the badges from the scaffolder are added to the README
 
@@ -13,6 +14,7 @@ Feature: Base Functionality
     And the existing README has existing badges
     And the existing README uses modern badge zones
     And the chosen sub-scaffolder produces badges
+    And the repository hosted on "github.com"
     When the project is lifted
     Then the badges from the scaffolder are added to the README
 
@@ -21,6 +23,7 @@ Feature: Base Functionality
     And the existing README has existing badges
     And the existing README uses modern badge zones
     And the chosen sub-scaffolder does not produce badges
+    And the repository hosted on "github.com"
     When the project is lifted
     Then the badges remain as they were in the README
 
@@ -29,6 +32,7 @@ Feature: Base Functionality
     And the existing README has no badges
     And the existing README uses legacy badge section markers
     And the chosen sub-scaffolder produces badges
+    And the repository hosted on "github.com"
     When the project is lifted
     Then the badges from the scaffolder are added to the README
 
@@ -37,6 +41,7 @@ Feature: Base Functionality
     And the existing README has existing badges
     And the existing README uses legacy badge section markers
     And the chosen sub-scaffolder produces badges
+    And the repository hosted on "github.com"
     When the project is lifted
     Then the badges from the scaffolder are added to the README
 
@@ -44,5 +49,6 @@ Feature: Base Functionality
     Given the existing README has existing badges
     And the existing README uses modern badge zones
     And the enhancers produce badges
+    And the repository hosted on "github.com"
     When the project is lifted
     Then the badges from the enhancers are added to the README

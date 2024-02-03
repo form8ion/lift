@@ -10,9 +10,8 @@ let lift, questionNames;
 
 Before(async function () {
   const {simpleGit} = await td.replaceEsm('simple-git');
-  const simpleGitInstance = td.object(['remote']);
-  td.when(simpleGit(process.cwd())).thenReturn(simpleGitInstance);
-  td.when(simpleGitInstance.remote(['get-url', 'origin'])).thenResolve('git@github.com:form8ion/lift.git');
+  this.simpleGitInstance = td.object(['remote']);
+  td.when(simpleGit(process.cwd())).thenReturn(this.simpleGitInstance);
 
   // eslint-disable-next-line import/no-extraneous-dependencies,import/no-unresolved
   ({lift, questionNames} = await import('@form8ion/lift'));
@@ -34,7 +33,7 @@ When('the project is lifted', async function () {
   await lift({
     scaffolders: {
       ...!this.chosenScaffolder && {
-        [chosenScaffolder]: async ({decisions}) => {
+        [chosenScaffolder]: async ({decisions, vcs}) => {
           await prompt(
             [{
               name: SCAFFOLDER_PROMPT_QUESTION_NAME,
@@ -43,6 +42,8 @@ When('the project is lifted', async function () {
             decisions
           );
 
+          this.vcsDetailsProvidedToScaffolder = vcs;
+
           return {badges: this.scaffolderBadges};
         }
       }
@@ -50,7 +51,11 @@ When('the project is lifted', async function () {
     enhancers: {
       [any.word()]: {
         test: () => true,
-        lift: () => ({...this.enhancerBadges && {badges: this.enhancerBadges}})
+        lift: ({vcs}) => {
+          this.vcsDetailsProvidedToEnhancer = vcs;
+
+          return {...this.enhancerBadges && {badges: this.enhancerBadges}};
+        }
       }
     },
     decisions: {
