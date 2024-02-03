@@ -8,7 +8,5 @@ rules:
     - error
     - ignorePackages
 
-overrides:
-  - files: example.js
-    rules:
-      import/no-extraneous-dependencies: off
+parserOptions:
+  ecmaVersion: 2022
