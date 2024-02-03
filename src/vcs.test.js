@@ -22,8 +22,8 @@ describe('vcs', () => {
     const remoteUrl = any.url();
     const projectRoot = any.string();
     const remote = vi.fn();
-    when(simpleGit.simpleGit).calledWith(projectRoot).mockReturnValue({remote});
-    when(remote).calledWith(['get-url', 'origin']).mockResolvedValue(remoteUrl);
+    when(simpleGit.simpleGit).calledWith({baseDir: projectRoot}).mockReturnValue({remote});
+    when(remote).calledWith(['get-url', 'origin']).mockResolvedValue(`${remoteUrl}\n`);
     when(GitUrlParse).calledWith(remoteUrl).mockReturnValue({owner, name, host});
 
     expect(await determineExistingHostDetails({projectRoot})).toEqual({owner, name, host});

@@ -10,7 +10,7 @@ Given('the repository hosted on {string}', async function (vcsHost) {
 
   td
     .when(this.simpleGitInstance.remote(['get-url', 'origin']))
-    .thenResolve(`git@${vcsHost}:${this.gitHostAccount}/${this.repositoryName}.git`);
+    .thenResolve(`git@${vcsHost}:${this.gitHostAccount}/${this.repositoryName}.git\n`);
 });
 
 Then('vcs details are provided to the enhancers', async function () {

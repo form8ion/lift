@@ -11,7 +11,7 @@ let lift, questionNames;
 Before(async function () {
   const {simpleGit} = await td.replaceEsm('simple-git');
   this.simpleGitInstance = td.object(['remote']);
-  td.when(simpleGit(process.cwd())).thenReturn(this.simpleGitInstance);
+  td.when(simpleGit({baseDir: process.cwd()})).thenReturn(this.simpleGitInstance);
 
   // eslint-disable-next-line import/no-extraneous-dependencies,import/no-unresolved
   ({lift, questionNames} = await import('@form8ion/lift'));
