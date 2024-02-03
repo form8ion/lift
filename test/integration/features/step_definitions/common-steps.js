@@ -4,16 +4,25 @@ import {prompt} from '@form8ion/overridable-prompts';
 import {After, Before, When} from '@cucumber/cucumber';
 import stubbedFs from 'mock-fs';
 import any from '@travi/any';
+import * as td from 'testdouble';
 
-// eslint-disable-next-line import/no-extraneous-dependencies,import/no-unresolved
-import {lift, questionNames} from '@form8ion/lift';
+let lift, questionNames;
 
 Before(async function () {
+  const {simpleGit} = await td.replaceEsm('simple-git');
+  const simpleGitInstance = td.object(['remote']);
+  td.when(simpleGit(process.cwd())).thenReturn(simpleGitInstance);
+  td.when(simpleGitInstance.remote(['get-url', 'origin'])).thenResolve('git@github.com:form8ion/lift.git');
+
+  // eslint-disable-next-line import/no-extraneous-dependencies,import/no-unresolved
+  ({lift, questionNames} = await import('@form8ion/lift'));
+
   stubbedFs({'README.md': ''});
 });
 
 After(function () {
   stubbedFs.restore();
+  td.reset();
 });
 
 When('the project is lifted', async function () {
