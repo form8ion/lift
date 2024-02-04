@@ -6,5 +6,5 @@ export async function determineExistingHostDetails({projectRoot}) {
   const remoteOrigin = await git.remote(['get-url', 'origin']);
   const {owner, name, host} = parseGitUrl(remoteOrigin.trimEnd());
 
-  return {owner, name, host};
+  return {owner, name, host: 'github.com' === host ? 'github' : host};
 }
