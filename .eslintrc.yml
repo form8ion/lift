@@ -1,12 +1,6 @@
 extends:
   - '@form8ion'
-  - '@form8ion/mocha'
   - '@form8ion/cucumber'
-
-rules:
-  import/extensions:
-    - error
-    - ignorePackages
 
 parserOptions:
   ecmaVersion: 2022
