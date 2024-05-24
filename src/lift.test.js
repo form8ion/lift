@@ -40,15 +40,16 @@ describe('lift', () => {
   it('should execute the chosen scaffolder', async () => {
     const chosenScaffolder = vi.fn();
     const scaffolderResults = {...any.simpleObject(), nextSteps: any.listOf(any.sentence)};
+    const dependencies = any.simpleObject();
     when(chooser.default).calledWith(scaffolders, decisions).mockResolvedValue(chosenScaffolder);
     when(chosenScaffolder)
       .calledWith({projectRoot: projectPath, vcs: vcsDetails, decisions})
       .mockResolvedValue(scaffolderResults);
     when(project.lift)
-      .calledWith({projectRoot: projectPath, results: scaffolderResults, vcs: vcsDetails, enhancers})
+      .calledWith({projectRoot: projectPath, results: scaffolderResults, vcs: vcsDetails, enhancers, dependencies})
       .mockResolvedValue(liftProjectResults);
 
-    await lift({scaffolders, decisions, enhancers});
+    await lift({scaffolders, decisions, enhancers}, dependencies);
 
     expect(resultsReporter.reportResults).toHaveBeenCalledWith({nextSteps: liftProjectNextSteps});
   });
