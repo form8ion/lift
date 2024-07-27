@@ -10,7 +10,7 @@ let lift, questionNames;
 
 Before(async function () {
   const {simpleGit} = await td.replaceEsm('simple-git');
-  this.simpleGitInstance = td.object(['remote']);
+  this.simpleGitInstance = td.object(['remote', 'checkIsRepo']);
   td.when(simpleGit({baseDir: process.cwd()})).thenReturn(this.simpleGitInstance);
 
   // eslint-disable-next-line import/no-extraneous-dependencies,import/no-unresolved
