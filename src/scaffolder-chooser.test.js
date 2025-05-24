@@ -2,7 +2,7 @@ import * as overridablePrompts from '@form8ion/overridable-prompts';
 
 import {afterEach, describe, expect, it, vi} from 'vitest';
 import any from '@travi/any';
-import {when} from 'jest-when';
+import {when} from 'vitest-when';
 
 import {questionNames} from './question-names.js';
 import choose from './scaffolder-chooser.js';
@@ -19,15 +19,17 @@ describe('scaffolder chooser', () => {
     const chosenScaffolerFunction = () => undefined;
     const scaffolders = {...any.simpleObject(), [chosenScaffolderName]: chosenScaffolerFunction};
     const decisions = any.simpleObject();
-    when(overridablePrompts.prompt).calledWith(
-      [{
-        name: questionNames.SCAFFOLDER,
-        message: 'Which scaffolder should be executed?',
-        type: 'list',
-        choices: ['General Maintenance', ...Object.keys(scaffolders)]
-      }],
-      decisions
-    ).mockResolvedValue({[questionNames.SCAFFOLDER]: chosenScaffolderName});
+    when(overridablePrompts.prompt)
+      .calledWith(
+        [{
+          name: questionNames.SCAFFOLDER,
+          message: 'Which scaffolder should be executed?',
+          type: 'list',
+          choices: ['General Maintenance', ...Object.keys(scaffolders)]
+        }],
+        decisions
+      )
+      .thenResolve({[questionNames.SCAFFOLDER]: chosenScaffolderName});
 
     expect(await choose(scaffolders, decisions)).toBe(chosenScaffolerFunction);
   });

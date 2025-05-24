@@ -3,7 +3,7 @@ import * as resultsReporter from '@form8ion/results-reporter';
 
 import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest';
 import any from '@travi/any';
-import {when} from 'jest-when';
+import {when} from 'vitest-when';
 
 import * as chooser from './scaffolder-chooser.js';
 import * as vcs from './vcs.js';
@@ -27,7 +27,7 @@ describe('lift', () => {
   beforeEach(() => {
     process.cwd = vi.fn();
 
-    when(vcs.determineExistingHostDetails).calledWith({projectRoot: projectPath}).mockResolvedValue(vcsDetails);
+    when(vcs.determineExistingHostDetails).calledWith({projectRoot: projectPath}).thenResolve(vcsDetails);
     process.cwd.mockReturnValue(projectPath);
   });
 
@@ -41,13 +41,13 @@ describe('lift', () => {
     const chosenScaffolder = vi.fn();
     const scaffolderResults = {...any.simpleObject(), nextSteps: any.listOf(any.sentence)};
     const dependencies = any.simpleObject();
-    when(chooser.default).calledWith(scaffolders, decisions).mockResolvedValue(chosenScaffolder);
+    when(chooser.default).calledWith(scaffolders, decisions).thenResolve(chosenScaffolder);
     when(chosenScaffolder)
       .calledWith({projectRoot: projectPath, vcs: vcsDetails, decisions})
-      .mockResolvedValue(scaffolderResults);
+      .thenResolve(scaffolderResults);
     when(project.lift)
       .calledWith({projectRoot: projectPath, results: scaffolderResults, vcs: vcsDetails, enhancers, dependencies})
-      .mockResolvedValue(liftProjectResults);
+      .thenResolve(liftProjectResults);
 
     await lift({scaffolders, decisions, enhancers}, dependencies);
 
@@ -58,7 +58,7 @@ describe('lift', () => {
     chooser.default.mockResolvedValue(undefined);
     when(project.lift)
       .calledWith({projectRoot: projectPath, results: {}, vcs: vcsDetails, enhancers})
-      .mockResolvedValue(liftProjectResults);
+      .thenResolve(liftProjectResults);
 
     await lift({scaffolders, decisions, enhancers});
 
