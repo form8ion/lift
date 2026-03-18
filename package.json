@@ -55,7 +55,6 @@
   "dependencies": {
     "@form8ion/overridable-prompts": "^1.2.0",
     "@form8ion/project": "^22.0.0-beta.12",
-    "@form8ion/results-reporter": "^1.1.0",
     "git-url-parse": "^16.0.0",
     "simple-git": "^3.16.0"
   },

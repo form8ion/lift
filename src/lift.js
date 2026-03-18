@@ -1,4 +1,3 @@
-import {reportResults} from '@form8ion/results-reporter';
 import {lift} from '@form8ion/project';
 
 import chooseScaffolder from './scaffolder-chooser.js';
@@ -12,7 +11,5 @@ export default async function liftProject({scaffolders, decisions, enhancers}, d
     ? await scaffolder({projectRoot, vcs, decisions})
     : {};
 
-  const liftResults = await lift({projectRoot, vcs, enhancers, results, dependencies});
-
-  reportResults({nextSteps: liftResults.nextSteps});
+  return lift({projectRoot, vcs, enhancers, results, dependencies});
 }

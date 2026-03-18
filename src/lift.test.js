@@ -1,5 +1,4 @@
 import * as project from '@form8ion/project';
-import * as resultsReporter from '@form8ion/results-reporter';
 
 import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest';
 import any from '@travi/any';
@@ -10,7 +9,6 @@ import * as vcs from './vcs.js';
 import lift from './lift.js';
 
 vi.mock('@form8ion/project');
-vi.mock('@form8ion/results-reporter');
 vi.mock('./scaffolder-chooser.js');
 vi.mock('./vcs.js');
 
@@ -49,9 +47,7 @@ describe('lift', () => {
       .calledWith({projectRoot: projectPath, results: scaffolderResults, vcs: vcsDetails, enhancers, dependencies})
       .thenResolve(liftProjectResults);
 
-    await lift({scaffolders, decisions, enhancers}, dependencies);
-
-    expect(resultsReporter.reportResults).toHaveBeenCalledWith({nextSteps: liftProjectNextSteps});
+    expect(await lift({scaffolders, decisions, enhancers}, dependencies)).toEqual(liftProjectResults);
   });
 
   it('should run the enhancers without erroring when choosing `General Maintenance`', async () => {
@@ -60,8 +56,6 @@ describe('lift', () => {
       .calledWith({projectRoot: projectPath, results: {}, vcs: vcsDetails, enhancers})
       .thenResolve(liftProjectResults);
 
-    await lift({scaffolders, decisions, enhancers});
-
-    expect(resultsReporter.reportResults).toHaveBeenCalledWith({nextSteps: liftProjectNextSteps});
+    expect(await lift({scaffolders, decisions, enhancers})).toEqual(liftProjectResults);
   });
 });
