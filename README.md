@@ -1,6 +1,6 @@
 # lift
 
-tool for running sub-scaffolders on existing projects :aerial_tramway:
+tool for running sub-scaffolders on existing projects :aerial\_tramway:
 
 <!--status-badges start -->
 
