@@ -2,7 +2,7 @@ import {prompt} from '@form8ion/overridable-prompts';
 
 import {questionNames} from './question-names.js';
 
-export default async function (scaffolders, decisions) {
+export default async function chooseScaffolder(scaffolders, decisions) {
   const {[questionNames.SCAFFOLDER]: chosenScaffolderName} = await prompt(
     [{
       name: questionNames.SCAFFOLDER,
