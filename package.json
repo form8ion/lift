@@ -54,7 +54,7 @@
   "packageManager": "npm@11.11.1+sha512.6ac6b30a876415dcf545e433ba4cb34bf0c3efbb86088a9415e446de0b5a4fc6fd511d277b59bd40e06e3204fbda28f5aeded346b3a8c780355b39ed31622e12",
   "dependencies": {
     "@form8ion/overridable-prompts": "^1.2.0",
-    "@form8ion/project": "^21.0.0",
+    "@form8ion/project": "^22.0.0-beta.12",
     "@form8ion/results-reporter": "^1.1.0",
     "@travi/cli-messages": "^1.0.4",
     "git-url-parse": "^16.0.0",
