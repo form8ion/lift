@@ -17,7 +17,17 @@ stubbedFs();
 // #### Execute
 
 (async () => {
-  await lift({scaffolders: {}, decisions: {[questionNames.SCAFFOLDER]: 'foo'}, enhancers: {}});
+  await lift(
+    {scaffolders: {}, decisions: {[questionNames.SCAFFOLDER]: 'foo'}, enhancers: {}},
+    {
+      logger: {
+        info: () => undefined,
+        success: () => undefined,
+        warn: () => undefined,
+        error: () => undefined
+      }
+    }
+  );
 })();
 
 // remark-usage-ignore-next

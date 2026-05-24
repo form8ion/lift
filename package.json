@@ -31,7 +31,7 @@
     "test:integration": "run-s 'test:integration:base -- --profile noWip'",
     "pretest:integration:base": "npm run build:js",
     "test:integration:base": "NODE_OPTIONS=--enable-source-maps cucumber-js test/integration",
-    "test:integration:debug": "DEBUG=test run-s test:integration",
+    "test:integration:debug": "DEBUG=test:* run-s test:integration",
     "test:integration:focus": "run-s 'test:integration:base -- --profile focus'",
     "test:integration:wip": "run-s 'test:integration:base -- --profile wip'",
     "prebuild": "run-s clean",
@@ -54,7 +54,7 @@
   "packageManager": "npm@11.15.0+sha512.fa4d2d93b9519e93143e70bb913b94ff2ad5fe69c5a0f84943be557cbb59e9fc1bcce55768fb1313f225f4f9f50c78b8f366f2332aa41effd7b10efa98d8d72f",
   "dependencies": {
     "@form8ion/overridable-prompts": "^1.2.0",
-    "@form8ion/project": "^22.0.0-beta.12",
+    "@form8ion/project": "^22.0.0-beta.19",
     "git-url-parse": "^16.0.0",
     "simple-git": "^3.16.0"
   },
@@ -71,6 +71,7 @@
     "chai": "6.2.2",
     "cross-env": "10.1.0",
     "cz-conventional-changelog": "3.3.0",
+    "debug": "4.4.3",
     "gherkin-lint": "4.2.4",
     "husky": "9.1.7",
     "lockfile-lint": "5.0.0",

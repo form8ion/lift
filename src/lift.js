@@ -11,5 +11,5 @@ export default async function liftProject({scaffolders, decisions, enhancers}, d
     ? await scaffolder({projectRoot, vcs, decisions})
     : {};
 
-  return lift({projectRoot, vcs, enhancers, results, dependencies});
+  return lift({projectRoot, vcs, enhancers, results}, dependencies);
 }
