@@ -45,7 +45,8 @@
     "watch": "run-s 'build:js -- --watch'"
   },
   "files": [
-    "lib/"
+    "lib/",
+    "src/"
   ],
   "publishConfig": {
     "access": "public",
