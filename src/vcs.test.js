@@ -33,14 +33,4 @@ describe('vcs', () => {
 
     expect(await determineExistingHostDetails({projectRoot})).toEqual({owner, name, host});
   });
-
-  it(
-    'should return `github` when the host is determined to be `github.com` until that can be a breaking change',
-    async () => {
-      const host = 'github.com';
-      when(GitUrlParse).calledWith(remoteUrl).thenReturn({owner, name, host});
-
-      expect(await determineExistingHostDetails({projectRoot})).toEqual({owner, name, host: 'github'});
-    }
-  );
 });

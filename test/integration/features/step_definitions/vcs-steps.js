@@ -17,7 +17,7 @@ Then('vcs details are provided to the enhancers', async function () {
   const expectedVcsDetails = {
     owner: this.gitHostAccount,
     name: this.repositoryName,
-    host: 'github.com' === this.vcsHost ? 'github' : this.vcsHost
+    host: this.vcsHost
   };
 
   assert.deepEqual(this.vcsDetailsProvidedToEnhancer, expectedVcsDetails);
